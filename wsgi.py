@@ -36,7 +36,6 @@ def initialize():
       contact= generate_random_contact_number()
       student= create_student(admin, str(ID),
           randomname.get_name(), 
-          randomname.get_name(), 
           randomname.get_name(),
           contact,
           random.choice(['Full-Time','Part-Time', 'Evening']),

@@ -11,9 +11,9 @@ def jwt_authenticate(id, password):
   if staff and staff.check_password(password):
     return create_access_token(identity=id)
 
-  student = Student.query.filter_by(ID=id).first()
-  if student and student.check_password(password):
-    return create_access_token(identity=id)	
+  # student = Student.query.filter_by(ID=id).first()
+  # if student and student.check_password(password):
+  #   return create_access_token(identity=id)	
 
   return None
 
@@ -31,9 +31,9 @@ def login(id, password):
     if staff and staff.check_password(password):
         return staff
 
-    student = Student.query.filter_by(ID=id).first()
-    if student and student.check_password(password):
-        return student
+    # student = Student.query.filter_by(ID=id).first()
+    # if student and student.check_password(password):
+    #     return student
 
     admin = Admin.query.filter_by(ID=id).first()
     if admin and admin.check_password(password):
@@ -51,9 +51,9 @@ def setup_flask_login(app):
     if staff:
       return staff
 
-    student = Student.query.get(user_id)
-    if student:
-      return student
+    # student = Student.query.get(user_id)
+    # if student:
+    #   return student
 
     admin = Admin.query.get(user_id)
     if admin:
@@ -74,9 +74,9 @@ def setup_jwt(app):
     if staff:
       return staff.ID
 
-    student= Student.query.filter_by(ID=identity).one_or_none() 
-    if student:
-      return student.ID
+    # student= Student.query.filter_by(ID=identity).one_or_none() 
+    # if student:
+    #   return student.ID
 
     return None
 
@@ -93,19 +93,19 @@ def setup_jwt(app):
       if staff:
           return staff
 
-      student = Student.query.filter_by(ID=identity).one_or_none()
-      if student:
-          return student
+      # student = Student.query.filter_by(ID=identity).one_or_none()
+      # if student:
+      #     return student
   return jwt
 
 
-def student_required(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        if not current_user.is_authenticated or not isinstance(current_user, Student):
-            return "Unauthorized", 401
-        return func(*args, **kwargs)
-    return wrapper
+# def student_required(func):
+#     @wraps(func)
+#     def wrapper(*args, **kwargs):
+#         if not current_user.is_authenticated or not isinstance(current_user, Student):
+#             return "Unauthorized", 401
+#         return func(*args, **kwargs)
+#     return wrapper
 
 
 def staff_required(func):
