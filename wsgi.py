@@ -74,7 +74,9 @@ def list_user_command(format):
     else:
         print(get_all_users_json())
 
-
+# @user_cli.command("review", help="Create a review")
+# def createReview():
+    
 
 app.cli.add_command(user_cli) # add the group to the cli
 
