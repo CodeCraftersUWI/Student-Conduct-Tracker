@@ -9,6 +9,8 @@ class VoteRecords(db.Model):
     type = db.Column(db.String, nullable=False)  # 'upvote' or 'downvote'
     voted_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+#staff = db.relationship('Staff', backref=db.backref('vote_records', lazy='dynamic'), foreign_keys=[staff_id])
+
     def __init__(self, staff_id, review_id, type):
         self.staff_id = staff_id
         self.review_id = review_id
