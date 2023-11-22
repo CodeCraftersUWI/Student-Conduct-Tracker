@@ -23,7 +23,7 @@ class VoteRecords(db.Model):
             "voted_at": self.voted_at.strftime("%d-%m-%Y %H:%M")
         }
 
-    @classmethod
+    # @classmethod
     def get_votes_for_review(cls, review_id):
         # Method to get all votes for a specific review
         return cls.query.filter_by(review_id=review_id).all()

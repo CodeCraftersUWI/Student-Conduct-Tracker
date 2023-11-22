@@ -74,6 +74,8 @@ def list_user_command(format):
     else:
         print(get_all_users_json())
 
+
+
 app.cli.add_command(user_cli) # add the group to the cli
 
 '''

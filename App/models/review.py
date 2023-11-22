@@ -2,6 +2,7 @@ from App.database import db
 from .student import Student
 from datetime import datetime
 from .karma import Karma
+from .voteRecords import VoteRecords
 
 # Define the association table for staff upvotes on reviews
 review_staff_upvoters = db.Table(
@@ -32,19 +33,38 @@ class Review(db.Model):
 
   studentID = db.Column(db.String(10), db.ForeignKey('student.ID'))
 
+  # staffUpvoters = db.relationship(
+  #     'Staff',
+  #     secondary=review_staff_upvoters,
+  #     backref=db.backref(
+  #         'reviews_upvoted',
+  #         lazy='joined'))  #for staff who have voted on the review
+  
   staffUpvoters = db.relationship(
-      'Staff',
-      secondary=review_staff_upvoters,
-      backref=db.backref(
-          'reviews_upvoted',
-          lazy='joined'))  #for staff who have voted on the review
+        'Staff',
+        secondary='vote_records',
+        secondaryjoin='and(VoteRecords.review_id == Review.ID, VoteRecords.type == "upvote")',
+        backref=db.backref('reviews_upvoted', lazy='joined'))
 
+  # staffDownvoters = db.relationship(
+  #     'Staff',
+  #     secondary=review_staff_downvoters,
+  #     backref=db.backref(
+  #         'reviews_downvoted',
+  #         lazy='joined'))  #for staff who have voted on the review
+  
   staffDownvoters = db.relationship(
+        'Staff',
+        secondary='vote_records',
+        secondaryjoin='and(VoteRecords.review_id == Review.ID, VoteRecords.type == "downvote")',
+        backref=db.backref('reviews_downvoted', lazy='joined'))
+  
+  voters = db.relationship(
       'Staff',
-      secondary=review_staff_downvoters,
+      secondary = VoteRecords,
       backref=db.backref(
-          'reviews_downvoted',
-          lazy='joined'))  #for staff who have voted on the review
+          'vote_records',
+          lazy='joined')) 
 
   upvotes = db.Column(db.Integer, nullable=False)
   downvotes = db.Column(db.Integer, nullable=False)

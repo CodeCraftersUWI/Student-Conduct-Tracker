@@ -1,4 +1,4 @@
-from App.models import Review, Karma, Student
+from App.models import Review, Karma, Student, VoteRecords
 from App.database import db
 
 def get_reviews(): 
@@ -78,10 +78,15 @@ def upvoteReview(reviewID, staff):
         if staff not in review.staffUpvoters:  # if staff has not upvoted allow the vote
             review.upvotes += 1
             review.staffUpvoters.append(staff)
+            
 
             if staff in review.staffDownvoters:  # if they had downvoted previously then remove their downvote to account for switching between votes
                 review.downvotes -= 1
                 review.staffDownvoters.remove(staff)
+                
+            else:
+
+
 
         db.session.add(review)
         db.session.commit()
