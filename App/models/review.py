@@ -2,6 +2,7 @@ from App.database import db
 from .student import Student
 from datetime import datetime
 from .karma import Karma
+from .voteRecords import VoteRecords
 
 # Define the association table for staff upvotes on reviews
 review_staff_upvoters = db.Table(
@@ -32,19 +33,52 @@ class Review(db.Model):
 
   studentID = db.Column(db.String(10), db.ForeignKey('student.ID'))
 
-  staffUpvoters = db.relationship(
-      'Staff',
-      secondary=review_staff_upvoters,
-      backref=db.backref(
-          'reviews_upvoted',
-          lazy='joined'))  #for staff who have voted on the review
+  # staffUpvoters = db.relationship(
+  #     'Staff',
+  #     secondary=review_staff_upvoters,
+  #     backref=db.backref(
+  #         'reviews_upvoted',
+  #         lazy='joined'))  #for staff who have voted on the review
+  
+  # staffUpvoters = db.relationship(
+  #   'Staff',
+  #   secondary='vote_records',
+  #   secondaryjoin=(
+  #     'and_('
+  #     'VoteRecords.review_id == Review.ID,' 
+  #     'VoteRecords.type == "upvote"'
+  #     ')'
+  #   ),
+  #   backref=db.backref('reviews_upvoted', lazy='joined'),
+  #   overlaps="reviews_upvoted"
+  # )
 
-  staffDownvoters = db.relationship(
+  # staffDownvoters = db.relationship(
+  #     'Staff',
+  #     secondary=review_staff_downvoters,
+  #     backref=db.backref(
+  #         'reviews_downvoted',
+  #         lazy='joined'))  #for staff who have voted on the review
+  
+#   staffDownvoters = db.relationship(
+#     'Staff',
+#     secondary='vote_records',
+#     secondaryjoin=(
+#         'and_('
+#         'VoteRecords.review_id == Review.ID, '
+#         'VoteRecords.type == "downvote"'
+#         ')'
+#     ),
+#     backref=db.backref('reviews_downvoted', lazy='joined'),
+#     overlaps="reviews_upvoted"
+# )
+  
+  voters = db.relationship(
       'Staff',
-      secondary=review_staff_downvoters,
+      secondary = 'vote_records',
       backref=db.backref(
-          'reviews_downvoted',
-          lazy='joined'))  #for staff who have voted on the review
+          'vote_records',
+          lazy='joined')) 
 
   upvotes = db.Column(db.Integer, nullable=False)
   downvotes = db.Column(db.Integer, nullable=False)
@@ -88,74 +122,74 @@ class Review(db.Model):
     return None
 
   #adds 1 to the upvotes for the review when called
-  def upvoteReview(self, staff): 
-    if staff in self.staffUpvoters:  # If they upvoted the review already, return current votes
-      return self.upvotes
+  # def upvoteReview(self, staff): 
+  #   if staff in self.voters:  # If they upvoted the review already, return current votes
+  #     return self.upvotes
 
-    else:
-      if staff not in self.staffUpvoters:  #if staff has not upvoted allow the vote
-        self.upvotes += 1
-        self.staffUpvoters.append(staff)
+  #   else:
+  #     if staff not in self.staffUpvoters:  #if staff has not upvoted allow the vote
+  #       self.upvotes += 1
+  #       self.staffUpvoters.append(staff)
 
-        if staff in self.staffDownvoters:  #if they had downvoted previously then remove their downvote to account for switching between votes
-          self.downvotes -= 1
-          self.staffDownvoters.remove(staff)
+  #       if staff in self.staffDownvoters:  #if they had downvoted previously then remove their downvote to account for switching between votes
+  #         self.downvotes -= 1
+  #         self.staffDownvoters.remove(staff)
 
-      db.session.add(self)
-      db.session.commit()
+  #     db.session.add(self)
+  #     db.session.commit()
 
-      # Retrieve the associated Student object using studentID
-      student = Student.query.get(self.studentID)
+  #     # Retrieve the associated Student object using studentID
+  #     student = Student.query.get(self.studentID)
 
-      # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
-      if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
-        db.session.add(karma)  # Add the Karma record to the session
-        db.session.flush()  # Ensure the Karma record gets an ID
-        student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
+  #     # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
+  #     if student.karmaID is None:
+  #       karma = Karma(score=0.0, rank=-99)
+  #       db.session.add(karma)  # Add the Karma record to the session
+  #       db.session.flush()  # Ensure the Karma record gets an ID
+  #       student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
 
-      # Update Karma for the student
-      student_karma = Karma.query.get(student.karmaID)
-      student_karma.calculateScore(student)
-      student_karma.updateRank()
-      db.session.commit()
+  #     # Update Karma for the student
+  #     student_karma = Karma.query.get(student.karmaID)
+  #     student_karma.calculateScore(student)
+  #     student_karma.updateRank()
+  #     db.session.commit()
 
-    return self.upvotes
+  #   return self.upvotes
 
   #adds 1 to the downvotes for the review when called
 
-  def downvoteReview(self, staff): 
-    if staff in self.staffDownvoters:  # If they downvoted the review already, return current votes
-      return self.downvotes
+  # def downvoteReview(self, staff): 
+  #   if staff in self.staffDownvoters:  # If they downvoted the review already, return current votes
+  #     return self.downvotes
 
-    else:
-      if staff not in self.staffDownvoters:  #if staff has not downvoted allow the vote
-        self.downvotes += 1
-        self.staffDownvoters.append(staff)
+  #   else:
+  #     if staff not in self.staffDownvoters:  #if staff has not downvoted allow the vote
+  #       self.downvotes += 1
+  #       self.staffDownvoters.append(staff)
 
-        if staff in self.staffUpvoters:  #if they had upvoted previously then remove their upvote to account for switching between votes
-          self.upvotes -= 1
-          self.staffUpvoters.remove(staff)
+  #       if staff in self.staffUpvoters:  #if they had upvoted previously then remove their upvote to account for switching between votes
+  #         self.upvotes -= 1
+  #         self.staffUpvoters.remove(staff)
 
-      db.session.add(self)
-      db.session.commit()
-      # Retrieve the associated Student object using studentID
-      student = Student.query.get(self.studentID)
+  #     db.session.add(self)
+  #     db.session.commit()
+  #     # Retrieve the associated Student object using studentID
+  #     student = Student.query.get(self.studentID)
 
-      # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
-      if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
-        db.session.add(karma)  # Add the Karma record to the session
-        db.session.flush()  # Ensure the Karma record gets an ID
-        db.session.commit()
-        student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
+  #     # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
+  #     if student.karmaID is None:
+  #       karma = Karma(score=0.0, rank=-99)
+  #       db.session.add(karma)  # Add the Karma record to the session
+  #       db.session.flush()  # Ensure the Karma record gets an ID
+  #       db.session.commit()
+  #       student.karmaID = karma.karmaID  # Set the student's karmaID to the new Karma record's ID
 
-  # Update Karma for the student
-      student_karma = Karma.query.get(student.karmaID)
-      student_karma.calculateScore(student)
-      student_karma.updateRank()
+  # # Update Karma for the student
+  #     student_karma = Karma.query.get(student.karmaID)
+  #     student_karma.calculateScore(student)
+  #     student_karma.updateRank()
 
-    return self.downvotes
+  #   return self.downvotes
 
   #return json representation of the review
 
@@ -172,3 +206,5 @@ class Review(db.Model):
         "downvotes": self.downvotes,
         "comment": self.comment
     }
+  
+  
