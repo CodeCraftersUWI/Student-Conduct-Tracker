@@ -6,7 +6,7 @@ import random
 import randomname
 from App.database import db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_user, create_staff, create_student, get_all_users_json, get_all_users )
+from App.controllers import ( create_user, create_staff, create_review, create_student, get_all_users_json, get_all_users, addVote, get_staff )
 from App.views import (generate_random_contact_number)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -74,8 +74,11 @@ def list_user_command(format):
     else:
         print(get_all_users_json())
 
-# @user_cli.command("review", help="Create a review")
-# def createReview():
+@user_cli.command("review", help="Create a review")
+def createReview():
+    create_review(1, 1, True, "Good Job")
+    staff = get_staff(1)
+    addVote(1, staff, "upvote")
     
 
 app.cli.add_command(user_cli) # add the group to the cli
