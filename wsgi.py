@@ -76,9 +76,9 @@ def list_user_command(format):
 
 @user_cli.command("review", help="Create a review")
 def createReview():
-    create_review(1, 1, True, "Good Job")
-    staff = get_staff(1)
-    addVote(1, staff, "upvote")
+    # create_review(2, 51, True, "Good Job")
+    staff = get_staff(2)
+    addVote(1, staff, "downvote")
     
 
 app.cli.add_command(user_cli) # add the group to the cli
