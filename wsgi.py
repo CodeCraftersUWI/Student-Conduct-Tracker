@@ -6,7 +6,7 @@ import random
 import randomname
 from App.database import db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_user, create_staff, create_review, create_student, get_all_users_json, get_all_users, addVote, get_staff )
+from App.controllers import ( create_user, create_staff, create_review, create_student, get_all_users_json, get_all_users, addVote, get_staff, add_vote_record )
 from App.views import (generate_random_contact_number)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -44,6 +44,18 @@ def initialize():
       db.session.add(student)
       db.session.commit()
 
+  staff= create_staff(admin, 
+          "stafftester", 
+          randomname.get_name(), 
+          "bobpass", 
+          str(ID), 
+          randomname.get_name() + '@schooling.com', 
+          str(random.randint(1, 15))
+  )
+  db.session.add(staff)
+  db.session.commit()
+  review = create_review(2, 50, True, "Testing")
+  vote_record = addVote(1, staff, "upvote")
   return jsonify({'message': 'Database initialized'}),201
 
 '''
