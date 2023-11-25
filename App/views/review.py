@@ -26,7 +26,7 @@
 #     return jsonify([review.to_json() for review in reviews]), 200
 
 # # Route to view a specific review and vote on it
-# @review_views.route('/review/<int:review_id>', methods=['GET',])
+# @review_views.route('/reviews/<int:review_id>', methods=['GET',])
 # def view_review(review_id):
 #     review = get_review(review_id)
 #     if review:
@@ -101,7 +101,7 @@
 #     return "Staff does not exist", 404
 
 # # Route to edit a review
-# @review_views.route("/review/edit/<int:review_id>", methods=["PUT"])
+# @review_views.route("/reviews/edit/<int:review_id>", methods=["PUT"])
 # @jwt_required()
 # def review_edit(review_id):
 #     review = get_review(review_id)
@@ -130,7 +130,7 @@
 
 
 # # Route to delete a review
-# @review_views.route("/review/delete/<int:review_id>", methods=["DELETE"])
+# @review_views.route("/reviews/delete/<int:review_id>", methods=["DELETE"])
 # @jwt_required()
 # def review_delete(review_id):
 #     review = get_review(review_id)
