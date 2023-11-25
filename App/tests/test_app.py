@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import random
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User, Student, Staff, Admin
+from App.models import User, Student, Staff, Admin, VoteRecords
 from App.controllers import (
     create_user,
     get_karma_by_id,
@@ -20,8 +20,6 @@ from App.controllers import (
     get_review, 
     get_reviews_for_student, 
     get_reviews_by_staff, 
-    upvoteReview, 
-    downvoteReview,
     get_student_rankings, 
     search_students_searchTerm
 )
@@ -46,8 +44,8 @@ class UserUnitTests(unittest.TestCase):
         assert newStaff.firstname == "Bob" and newStaff.lastname == "Charles" and newStaff.check_password("bobpass") and newStaff.ID == "342" and newStaff.email == "bob.charles@staff.com" and newStaff.teachingExperience == "10"
 
     def test_new_student (self):
-        newStudent = Student( "813", "Joe", "Dune", "dupass", "0000-653-4343", "Full-Time", "2")
-        assert newStudent.ID == "813" and newStudent.firstname == "Joe" and newStudent.lastname == "Dune" and newStudent.check_password("dupass") and newStudent.contact == "0000-653-4343" and newStudent.studentType == "Full-Time" and newStudent.yearOfStudy == "2"
+        newStudent = Student( "813", "Joe", "Dune", "0000-653-4343", "Full-Time", "2")
+        assert newStudent.ID == "813" and newStudent.firstname == "Joe" and newStudent.lastname == "Dune" and newStudent.contact == "0000-653-4343" and newStudent.studentType == "Full-Time" and newStudent.yearOfStudy == "2"
 
     def test_set_password(self): 
         newAdmin = Admin("Bob", "Boblast",  "bobpass")
@@ -62,6 +60,10 @@ class UserUnitTests(unittest.TestCase):
         newAdmin = Admin("Bob", "Boblast",  "bobpass")
         newAdmin_json = newAdmin.to_json()
         self.assertDictEqual(newAdmin_json, {"adminID":"A1", "firstname":"Bob", "lastname":"Boblast"})
+    
+    def test_VoteRecords(self):
+        newRecord = VoteRecords(2, 1, "upvote")
+        assert newRecord.staff_id == 2 and newRecord.review_id == 1 and newRecord.type == "upvote"
 
 
     # pure function no side effects or integrations called
