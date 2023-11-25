@@ -25,18 +25,22 @@ def delete_vote_record(vote_record):
     db.session.commit()
     return True
 
-def edit_vote_record(staff, new_type):
-    voted_record = db.session.query.filter_by(staff_id=staff.ID).first()
-    if new_type.lower() == 'upvote':
-        voted_record.type = 'upvote'
-    elif new_type.lower() == 'downvote':
-        voted_record.type = 'downvote'
-    else:
-        return None
+def edit_vote_record(staff_id, review_id, new_type):
+    voted_record = VoteRecords.query.filter_by(staff_id=staff_id, review_id=review_id).first()
 
-    voted_record.voted_at = datetime.utcnow()
+    if voted_record:
+        if new_type.lower() == 'upvote':
+            voted_record.type = 'upvote'
+        elif new_type.lower() == 'downvote':
+            voted_record.type = 'downvote'
+        else:
+            return None
 
-    db.session.add(voted_record)
-    db.session.commit()
-    return voted_record
+        voted_record.voted_at = datetime.datetime.utcnow()
+
+        db.session.add(voted_record)
+        db.session.commit()
+
+        return voted_record
+    return None
 
