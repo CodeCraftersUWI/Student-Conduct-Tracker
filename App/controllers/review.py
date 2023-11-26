@@ -37,20 +37,20 @@ def addVote(reviewID, staff, type):
     review = get_review(reviewID)
 
     if review:
-        if review.voters is None: # checks if staff member voted already
-            voteRecord = get_vote_record_by_staff_and_review(staff.id, reviewID) # need to see what staff previously voted for
-
+        
+        voteRecord = get_vote_record_by_staff_and_review(staff.ID, reviewID) # need to see what staff previously voted for
+        if voteRecord:
             if voteRecord.type == "upvote" and type == "upvote": # if staff wants to upvote again and they already upvoted, nothing just return
                 return review.upvotes
             
             if voteRecord.type == "downvote" and type == "downvote": # if staff wants to downvote again and they already downvoted, nothing just return
                 return review.downvotes
-            
+        
             ##current record is a downvote but staff wants to change upvote
             if voteRecord.type == "downvote" and type == "upvote":
                 review.downvotes -= 1
                 review.upvotes += 1
-                edit_vote_record(staff, "upvote")
+                edit_vote_record(staff.ID, reviewID, "upvote")
                 db.session.add(review)
                 db.session.commit()
                 updateKarma(review)
@@ -60,23 +60,35 @@ def addVote(reviewID, staff, type):
             if voteRecord.type == "upvote" and type == "downvote":
                 review.upvotes -= 1
                 review.downvotes += 1
-                edit_vote_record(staff, "upvote")
+                edit_vote_record(staff.ID, reviewID, "downvote")
                 db.session.add(review)
                 db.session.commit()
                 updateKarma(review)
-                return review.downvotes  
-        else: # staff first time voting
+                return review.downvotes
+        else:
             add_vote_record(staff.get_id(), reviewID, type)
             review.voters.append(staff)
             if type == "upvote":
                 review.upvotes += 1
             else:
                 review.downvotes += 1
-            
+
             updateKarma(review)
             db.session.add(review)
             db.session.commit()
-    else:
+            
+    else: # staff first time voting
+        add_vote_record(staff.get_id(), reviewID, type)
+        review.voters.append(staff)
+        if type == "upvote":
+            review.upvotes += 1
+        else:
+            review.downvotes += 1
+        
+        updateKarma(review)
+        db.session.add(review)
+        db.session.commit()
+    
         return
 
 
