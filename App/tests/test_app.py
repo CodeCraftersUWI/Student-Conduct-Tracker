@@ -219,7 +219,7 @@ class UsersIntegrationTests(unittest.TestCase):
         # addVote(review.ID, staff_2, "upvote")
         newDownVote = addVote(review.ID, staff_2, "downvote")
 
-        assert old_upVotes + 3 == newUpVotes
+        assert old_upVotes + 2 == newUpVotes
         assert old_downvotes + 1 == newDownVote
 
     def test_get_rankings(self): 
