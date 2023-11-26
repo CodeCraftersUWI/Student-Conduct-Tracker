@@ -27,7 +27,6 @@ def delete_vote_record(vote_record):
 
 def edit_vote_record(staff_id, review_id, new_type):
     voted_record = VoteRecords.query.filter_by(staff_id=staff_id, review_id=review_id).first()
-
     if voted_record:
         if new_type.lower() == 'upvote':
             voted_record.type = 'upvote'
