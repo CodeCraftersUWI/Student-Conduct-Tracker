@@ -70,25 +70,17 @@ def addVote(reviewID, staff, type):
             review.voters.append(staff)
             if type == "upvote":
                 review.upvotes += 1
+                updateKarma(review)
+                db.session.add(review)
+                db.session.commit()
+                return review.upvotes
             else:
                 review.downvotes += 1
-
-            updateKarma(review)
-            db.session.add(review)
-            db.session.commit()
-            
-    else: # staff first time voting
-        add_vote_record(staff.get_id(), reviewID, type)
-        review.voters.append(staff)
-        if type == "upvote":
-            review.upvotes += 1
-        else:
-            review.downvotes += 1
-        
-        updateKarma(review)
-        db.session.add(review)
-        db.session.commit()
-    
+                updateKarma(review)
+                db.session.add(review)
+                db.session.commit()
+                return review.downvotes
+    else:
         return
 
 
