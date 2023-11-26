@@ -22,7 +22,7 @@ def get_staff_action(staff_id):
         return jsonify(staff.to_json())
     return 'Staff not found', 404
 
-@staff_views.route('/student/<string:student_id>/reviews', methods=['POST'])
+@staff_views.route('/students/<string:student_id>/reviews', methods=['POST'])
 @jwt_required()
 def create_review_action(student_id):
     if not jwt_current_user or not isinstance(jwt_current_user, Staff):
