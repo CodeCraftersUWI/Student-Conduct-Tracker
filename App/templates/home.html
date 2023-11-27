@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="../static/homestyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script>
+        function handleClick() {
+            alert('Text clicked!');
+        }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="#">Review</a></li>
+                <li><a href="#">Account</a></li>
+            </ul>
+            <ul class="left-side">
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="image_container">
+        <div class="title-text">
+                <h1>Student Conduct Tracker</h1>
+            </div>
+        <div class="container">
+            <div class="search_wrap search_wrap_1">
+                <div class="search_box">
+                    <input type="text" class="input" placeholder="search...">
+                    <div class="btn btn_common">
+                        <i class='bx bx-search'></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="second-section">
+        <div class="event-container">
+            <button class="event" data-name="p-1">
+               <img src="https://i.postimg.cc/RCyDvv7C/thumbs-up.png" alt="">
+               <h3>View My Reviews</h3>
+            </button>
+      
+            <button class="event" data-name="p-2">
+               <img src="https://i.postimg.cc/tgph56pv/gavel.png" alt="">
+               <h3>onions</h3>
+            </button>
+      
+            <button class="event" data-name="p-3">
+               <img src="https://i.postimg.cc/NMWFNhRG/exclamation.png" alt="">
+               <h3>tomatoes</h3>
+            </button>
+         </div>
+    </div>
+    <div class="review-title">
+        <h3>Recent Reviews</h3>
+    </div>
+    <div class="recent-review">
+        <main class="table">
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Created by <span class="icon-arrow"></span></th>
+                            <th> Student ID <span class="icon-arrow"></span></th>
+                            <th> Created on <span class="icon-arrow"></span></th>
+                            <th> Type of Review <span class="icon-arrow"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Zinzu Chan Lee</span></p></td>
+                            <td> 4325665 </td>
+                            <td> 17 Dec, 2022 </td>
+                            <td>
+                                <p class="status delivered">Positive</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Jeet Saru</span></p></td>
+                            <td> 45525435 </td>
+                            <td> 27 Aug, 2023 </td>
+                            <td>
+                                <p class="status cancelled">Negative</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Sonal Gharti</span></p></td>
+                            <td> 4352545 </td>
+                            <td> 14 Mar, 2023 </td>
+                            <td>
+                                <p class="status shipped">Positive</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Alson GC</span></p></td>
+                            <td> 4253525 </td>
+                            <td> 25 May, 2023 </td>
+                            <td>
+                                <p class="status delivered">Negative</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Sarita Limbu</span></p></td>
+                            <td> 24354352 </td>
+                            <td> 23 Apr, 2023 </td>
+                            <td>
+                                <p class="status pending">Positive</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Alex Gonley</span></p></td>
+                            <td> 34535454 </td>
+                            <td> 23 Apr, 2023 </td>
+                            <td>
+                                <p class="status cancelled">Negative</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Jeet Saru</span></p></td>
+                            <td> 425235435 </td>
+                            <td> 20 May, 2023 </td>
+                            <td>
+                                <p class="status delivered">Positive</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Aayat Ali Khan</span></p></td>
+                            <td> 23545235 </td>
+                            <td> 30 Feb, 2023 </td>
+                            <td>
+                                <p class="status pending">Negative</p>
+                            </td>
+                        </tr>
+                        <tr >
+                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Alson GC</span></p></td>
+                            <td> 352454 </td>
+                            <td> 22 Dec, 2023 </td>
+                            <td>
+                                <p class="status cancelled">Positive</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
