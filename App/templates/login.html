@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='loginStyle.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="loginStyle.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="#">Review</a>
+            <a href="#">Account</a>
+        </nav>
+
+        <form action="/login" method = "post" class="search-bar">
+            <input type="email" placeholder="Search...">
+            <button type="submit"><i class='bx bx-search'></i></button>
+        </form>
+    </header>
+    <div class="container">
+        <div class="content">
+            <h2></h2>
+            <div class="text-sci"></div>
+            <h2>Welcome!<br><span>To The New Student Conduct Tracker</span></h2>
+
+            <br><p>This is an application made for staff to monitor student behavior</p>
+        </div>
+
+        <div class="logreg-box">
+            <div class="form-box login">
+                <form action="#">
+                    <h2>Sign In</h2>
+                    <div class="input-box" >
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <input type="text" required>
+                        <label>ID</label>
+                    </div>
+                    <div class="input-box" >
+                        <span class="icon"><i class='bx bxs-lock-alt' ></i></span>
+                        <input type="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label><input type="checkbox">Remember me</label>
+                        <a href="">Forget Password?</a>
+                    </div>
+                    <button class="btn">Submit</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
