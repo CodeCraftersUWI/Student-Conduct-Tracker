@@ -21,9 +21,11 @@
                 <li><a href="#">Review</a></li>
                 <li><a href="#">Account</a></li>
             </ul>
+            
             <ul class="left-side">
-                <li><a href="#">Logout</a></li>
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
             </ul>
+
         </nav>
     </header>
     <div class="image_container">

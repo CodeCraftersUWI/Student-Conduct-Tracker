@@ -2,6 +2,7 @@ import random
 from flask import Blueprint, render_template, jsonify
 from App.models import db
 from App.controllers import create_user, create_staff, create_student
+from flask_login import login_required
 import randomname
 
 from App.models.admin import Admin
@@ -44,3 +45,8 @@ def index_page():
         db.session.commit()
     return render_template('welcome.html')
     # return jsonify({'database initialised'})
+
+@index_views.route('/home', methods=['GET', 'POST'])
+@login_required
+def home():
+    return render_template('home.html')

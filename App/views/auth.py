@@ -33,7 +33,7 @@ def login_action():
             session['logged_in'] = True
             login_user(user)
             token = jwt_authenticate(user_id, password)
-            return render_template('index.html')
+            return redirect('/home')
         
         flash('Invalid username or password')
         # error_message = 'Incorrect ID or password given'
@@ -46,7 +46,7 @@ def login_action():
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
     logout_user()
-    return redirect('/'), jsonify('logged out!')
+    return redirect('/login')
    
 
 @auth_views.route('/api/login', methods=['POST'])
