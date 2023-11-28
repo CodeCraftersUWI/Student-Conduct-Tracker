@@ -1,0 +1,48 @@
+#lecturer{
+    padding: 20px;
+    display: flex;
+    line-height: 50px;
+}
+
+#lecturer img{
+    height: 100px;
+    width: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ADD8E6;
+}
+
+.button {
+    cursor: pointer;
+    top: 252px;
+    left: 1158px;
+    width: 188px;
+    height: 48px;
+    padding: 0px 8px;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #286dbf;
+    color: #e4e4e4;
+    font-size: 16px;
+    font-family: "Poppins";
+    font-weight: 600;
+    line-height: 24px;
+    outline: none;
+}
+
+#button{
+    float: right;
+}
