@@ -21,28 +21,19 @@ th, td {
 }
 
 tbody tr:nth-child(odd) {
-    background-color: #ADD8E6;
+    background-color: blue;
+    color: white;
 }
 
-.button {
-    cursor: pointer;
-    top: 252px;
-    left: 1158px;
-    width: 188px;
-    height: 48px;
-    padding: 0px 8px;
-    border: 0;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background-color: #286dbf;
-    color: #e4e4e4;
-    font-size: 16px;
-    font-family: "Poppins";
-    font-weight: 600;
-    line-height: 24px;
-    outline: none;
-}
 
 #button{
     float: right;
+}
+
+#button button{
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
