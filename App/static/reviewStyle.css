@@ -20,6 +20,7 @@
 
 #right-container {
     display:block;
+    padding-left: 50px;
 }
 
 #small, #big{
@@ -40,7 +41,6 @@
 
 #lecturer{
     display: flex;
-    border: 1px dotted #894343;
     margin-top: 20px;
 }
 
@@ -70,3 +70,8 @@
 #rightbtn{
     margin-left: 80%;
 }
+
+.button img, #arrows img{
+    height: 30px;
+}
+
