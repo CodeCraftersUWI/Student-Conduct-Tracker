@@ -8,8 +8,7 @@
   border: 0;
   box-sizing: border-box;
   border-radius: 6px;
-  background-color: #286dbf;
-  color: #e4e4e4;
+  color: #286dbf;
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
@@ -45,23 +44,7 @@ form{
 }
 
 
-.dropdown {
-    cursor: pointer;
-    top: 518px;
-    left: 116px;
-    width: 338px;
-    height: 36px;
-    padding: 0px 8px;
-    border: 0;
-    box-sizing: border-box;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(3,3,3,0.1);
-    background-color: #ffffff;
-    color: #030303;
-    font-size: 14px;
-    line-height: 16px;
-    outline: none;
-  }
+
 
 select, input {
     width: 120px; 
@@ -78,4 +61,11 @@ select, input {
   width: 100%;
 }
 
-
+#button button{
+  background-color: blue;
+  color: white;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  align-content: center;
+}
