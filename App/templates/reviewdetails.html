@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block additional_css%}<link rel="stylesheet" href="{{ url_for('static', filename='reviewStyle.css') }}">{%endblock%}
+{% block title %}Review Details{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+    <div id="left-container" class="container">
+        <div id="small">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6jagr881bJv-DLIj62GHOYG25EzcLrmr1Iw&usqp=CAU" alt="Image 2">
+            <img src="https://st5.depositphotos.com/1518767/66907/i/450/depositphotos_669075156-stock-photo-portrait-happy-african-american-elementary.jpg" alt="Image 3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFzlmIAAa7xWpH-DtJZcovTlPoCvUAtiMlzw&usqp=CAU" alt="Image 3">
+        </div>
+        <div id="big">
+            <img src="https://as1.ftcdn.net/v2/jpg/05/65/59/72/1000_F_565597248_TYAIlsbiQANu9A9Vmyb6ClYEwv5qokAE.jpg" alt="Image 1">
+        </div>
+    </div>
+
+    <div id="right-container" class="container">
+        <h4>Student ID: 81234567</h4>
+        <div id="lecturer">
+            <div id="profile">
+                <img src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg">
+            </div>
+            <div>
+                <p>John Doe</p>
+                <p>Lecturer</p>
+            </div>
+            
+        </div>
+        
+        <div id="reviewdetails">
+            <h6>Positive Review</h6>
+            <p>This is the review of the student.</p>
+        </div>
+        
+        <div class="buttons">
+            <a href="/reviews" class="button">Upvote</a>
+            <a href="/reviews" class="button">Downvote</a>
+        </div>
+
+        <div id="arrows">
+            <a href="#">Previous</a>
+            <a href="#" style="float: right;">Next</a>
+        </div>
+    </div>
+
+{% endblock %}
