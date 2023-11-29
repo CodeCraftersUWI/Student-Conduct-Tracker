@@ -42,13 +42,14 @@
           <div class="student-dropdown">
           <div id="name_ID">
 
-            <!-- {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                    {% endwith %} -->
+            <div class="flash-messages">
+              {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                      <!-- <ul> <li>{{ messages[0] }}</li></ul> -->
+                      <script>alert("{{ messages[0] }}"); </script>
+                  {% endif %}
+              {% endwith %}
+            </div>
             <div class="form-group">
               <label class="text" for="studentID">Student ID:</label>
               <input type="text" id="studentID" name="studentID" placeholder="Enter the Student ID" style="background-color: #a9a5a5;">
@@ -65,10 +66,10 @@
                     <span class="selected">Positive</span>
                       <div class="caret"></div>
                     </div>
-                    <ul class="menu" id="dropdownMenu">
+                    <ul class="menu" required id="dropdownMenu">
                       <li onclick="selectOption('Negative')">Negative</li>
-                      <li class="activate" onclick="selectOption('Positive')">Positive</li>
-                      <input type="hidden" id="reviewType" name="reviewType" value="Positive">
+                      <li onclick="selectOption('Positive')">Positive</li>
+                      <input type="hidden" id="reviewType" name="reviewType" value="">
                   </ul>
                 </div>
               </div>
@@ -98,6 +99,8 @@
       function selectOption(option) {
         const selectedText = document.querySelector('.selected');
         selectedText.textContent = option;
+        const reviewTypeInput = document.getElementById('reviewType');
+        reviewTypeInput.value = option;
         toggleDropdown();
       }
     </script>

@@ -25,7 +25,6 @@ def identify_page():
 def login_action():
     messages = get_flashed_messages()
     
-    
     if request.method == 'POST':
         data = request.form
         user_id = data.get('ID')  # Get the entered ID

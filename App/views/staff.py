@@ -79,14 +79,28 @@ def get_karma_rankings():
 @login_required
 def newReview():
   if request.method == 'POST':
-     if current_user.is_authenticated and isinstance(current_user, Staff):
-        staff_id = current_user.get_id()
-        print(f"Staff_id: {staff_id}")
-    # staff_ID = request.form['staffID']
-    # staff_id = jwt_current_user.staff_id
-    # student_id = request.form['studentID']
-    # review_type = request.form['reviewType']
-    # description = request.form['description']
+
+    if not isinstance(current_user, Staff):
+      return "Unauthorized", 401
+    
+    staff_id = current_user.get_id()
+    student_id = request.form['studentID']
+
+    student = get_student(student_id)
+    if not student:
+      flash("Student ID not found")
+      redirect('/newReview')
+    
+
+    review_type = request.form['reviewType']
+    description = request.form['description']
+    if review_type == "Positive":
+      is_positive = True
+    else:
+      is_positive = False
+
+    create_review(staff_id, student_id, is_positive, description)
+    return redirect("/home")
 
     
     # staff = get_staff(staff_ID)
