@@ -204,6 +204,7 @@ input {
 }
 
 #studentID {
+  display: flex;
   top: 339px;
   left: 496px;
   width: 354px;
@@ -220,6 +221,14 @@ input {
   outline: none;
 }
 
+.student-dropdown{
+  display: flex;
+}
+
+.review-type-container{
+  padding-top: 30px;
+}
+
 .description-text {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -230,12 +239,12 @@ input {
 }
 
 .container-dropdown {
-  width: 100%;
+  width: 734px;
   height: 150px;
 }
 
 .dropdown {
-  min-width: 15em;
+  min-width: 100px;
   position: relative;
 }
 
@@ -308,8 +317,8 @@ input {
   position: absolute;
   top: 3em;
   left: 50%;
-  width: 100%;
-  transform: translateX(-50%);
+  width: 45%;
+  transform: translateX(-110%);
   opacity: 0;
   display: none;
   transition: 0.2s;

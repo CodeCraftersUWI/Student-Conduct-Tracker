@@ -39,27 +39,22 @@
         <h1>Create Review</h1>
 
         <form class="form" action = "{{ url_for('staff_views.newReview') }}"  method = "post">
+          <div class="student-dropdown">
           <div id="name_ID">
-            <div class="form-group">
-              <label class="text" for="staffID">Lecturer ID:</label>
-              <input type="text" id="staffID" name="lecturerName" placeholder="Enter your staff ID" value="John" style="background-color: #a9a5a5;">
 
-                    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+            <!-- {% with messages = get_flashed_messages(with_categories=true) %}
                     {% for category, message in messages %}
                         <div class="alert alert-{{ category }}">
                             {{ message }}
                         </div>
                     {% endfor %}
                     {% endwith %} -->
-            </div>
-
             <div class="form-group">
               <label class="text" for="studentID">Student ID:</label>
               <input type="text" id="studentID" name="studentID" placeholder="Enter the Student ID" style="background-color: #a9a5a5;">
             </div>
-          </div>   
-
-            
+          </div>  
+          <div class="review-type-container">
             <div>
               <label class="text" for="TypeofReview">Type of Review</label>
             </div>
@@ -67,10 +62,10 @@
               <div class="container-dropdown">
                 <div class="dropdown">
                   <div class="select" onclick="toggleDropdown()">
-                      <span class="selected">Positive</span>
+                    <span class="selected">Positive</span>
                       <div class="caret"></div>
-                  </div>
-                  <ul class="menu" id="dropdownMenu">
+                    </div>
+                    <ul class="menu" id="dropdownMenu">
                       <li onclick="selectOption('Negative')">Negative</li>
                       <li class="activate" onclick="selectOption('Positive')">Positive</li>
                       <input type="hidden" id="reviewType" name="reviewType" value="Positive">
@@ -78,7 +73,9 @@
                 </div>
               </div>
             </div>
-
+          </div> 
+          </div>
+          
             <div class="description-container">
               <div class="description-text">
                 <label class="text" for="description">Description</label>
