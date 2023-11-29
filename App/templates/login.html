@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='loginStyle.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" href="loginStyle.css">
 </head>
 <body>
     <header class="header">
@@ -21,6 +20,9 @@
             <button type="submit"><i class='bx bx-search'></i></button>
         </form>
     </header>
+
+    
+
     <div class="container">
         <div class="content">
             <h2></h2>
@@ -32,16 +34,29 @@
 
         <div class="logreg-box">
             <div class="form-box login">
-                <form action="#">
+                <form action="/login" method = "post">
                     <h2>Sign In</h2>
+
+                    <div class="flash-messages">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <ul>
+                                    {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
                     <div class="input-box" >
                         <span class="icon"><i class='bx bxs-envelope'></i></span>
-                        <input type="text" required>
+                        <input type="text" required name = 'ID'>
                         <label>ID</label>
                     </div>
                     <div class="input-box" >
                         <span class="icon"><i class='bx bxs-lock-alt' ></i></span>
-                        <input type="password" required>
+                        <input type="password" required name='password'>
                         <label>Password</label>
                     </div>
                     <div class="remember-forgot">
@@ -49,8 +64,9 @@
                         <a href="">Forget Password?</a>
                     </div>
                     <button class="btn">Submit</button>
+                </form>
             </div>
-        </div>
+        </div> 
     </div>
 </body>
 </html>

@@ -20,21 +20,33 @@ def identify_page():
     return jsonify({'message': f"username: {current_user.username}, id : {current_user.id}"})
 
 
-@auth_views.route('/login', methods=['POST'])
+@auth_views.route('/login', methods=['POST', 'GET'])
 def login_action():
-    data = request.json
-    user = login(data['ID'], data['password'])
-    if user:
-        session['logged_in'] = True
-        token = jwt_authenticate(data['ID'], data['password'])
-        return 'user logged in!'
-    return 'bad username or password given', 401
+    if request.method == 'POST':
+        data = request.form
+        user_id = data.get('ID')  # Get the entered ID
+        password = data.get('password')  # Get the entered password
+
+        user = login(user_id, password)
+        if user:
+            flash('Logged in successfully.')
+            session['logged_in'] = True
+            login_user(user)
+            token = jwt_authenticate(user_id, password)
+            return redirect('/home')
+        
+        flash('Invalid username or password')
+        # error_message = 'Incorrect ID or password given'
+        # return jsonify({'error': error_message}), 401
+        return redirect('/login')
+    
+    return render_template('login.html')
 
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
     logout_user()
-    return redirect('/'), jsonify('logged out!')
+    return redirect('/login')
    
 
 @auth_views.route('/api/login', methods=['POST'])
