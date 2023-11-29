@@ -1,6 +1,7 @@
 from App.models import Review, Karma, Student, VoteRecords
 from App.controllers.voteRecords import edit_vote_record, add_vote_record, get_vote_record_by_staff_and_review
 from App.database import db
+from sqlalchemy import desc
 
 def get_reviews(): 
     return db.session.query(Review).all()
@@ -11,9 +12,11 @@ def get_reviews_for_student(studentID):
 def get_review(reviewID):
     return Review.query.filter_by(ID=reviewID).first()
 
+def get_latest_reviews():
+    return Review.query.order_by(desc(Review.created)).limit(5).all()
+
 def get_reviews_by_staff(staffID):
     return db.session.query(Review).filter_by(reviewerID=staffID).all()
-
 
 def edit_review(review, staff, is_positive, comment):
     if review.reviewer == staff:
