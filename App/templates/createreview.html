@@ -14,22 +14,19 @@
 
   </head>
   <body>
-    <nav class="grey">
-      <div class="nav-wrapper">
-        <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
-        <div class="nav-wrapper">
-          <ul id="nav-mobile" class="left">
-            <li ><a href="/" style="color: black;">Review</a></li>
-            <li><a href="/" style="color: black;">Account</a></li>
-            <li><a href="/" style="color: black;">Home</a></li>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="#">Review</a></li>
+                <li><a href="#">Account</a></li>
             </ul>
-          </ul>
-          <ul id="nav-mobile" class="right">
-            <li><a href="/logout" style="color: black;">Logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+            
+            <ul class="left-side">
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+            </ul>
+
+        </nav>
+    </header>
     
     <div class="container" id="content">
         <h1>Create Review</h1>
