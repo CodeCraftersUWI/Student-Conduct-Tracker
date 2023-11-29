@@ -1,6 +1,6 @@
 from App.database import db
 from .student import Student
-import datetime
+from datetime import datetime
 
 class Karma(db.Model):
   __tablename__ = "karma"
