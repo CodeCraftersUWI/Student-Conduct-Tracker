@@ -81,6 +81,8 @@ body {
 }
 
 .container {
+display: flex;
+justify-content: space-between;
   padding-top: 50px;
   padding-left: 50px;
   padding-right: 50px;
@@ -101,6 +103,9 @@ body {
 }
 
 .small-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 147px;
   height: 525px;
 }
@@ -111,6 +116,7 @@ body {
 }
 
 .large-img {
+  padding-left: 5px;
   top: 104px;
   left: 1713px;
   width: 468px;
@@ -118,7 +124,16 @@ body {
 }
 
 .large-img img {
-  
+  width: 466px;
+  height: 524px;
+}
+
+.review-container{
+
+}
+
+.student-id{
+    display: flex;
 }
 
 /* .container {
