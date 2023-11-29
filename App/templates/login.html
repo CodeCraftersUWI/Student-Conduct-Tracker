@@ -20,9 +20,7 @@
             <button type="submit"><i class='bx bx-search'></i></button>
         </form>
     </header>
-
     
-
     <div class="container">
         <div class="content">
             <h2></h2>
@@ -40,8 +38,8 @@
                     <div class="flash-messages">
                         {% with messages = get_flashed_messages() %}
                             {% if messages %}
-                                <ul> <li>{{ messages[0] }}</li></ul>
-                                <!-- <script>alert("{{ messages[0] }}"); </script> -->
+                                <!-- <ul> <li>{{ messages[0] }}</li></ul> -->
+                                <script>alert("{{ messages[0] }}"); </script>
                             {% endif %}
                         {% endwith %}
                     </div>

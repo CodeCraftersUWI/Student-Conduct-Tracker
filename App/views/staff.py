@@ -4,8 +4,8 @@ from flask import Blueprint, request, jsonify, render_template
 from App.controllers import Student, Staff
 from App.controllers.user import get_staff, get_student
 from App.database import db
-from flask_jwt_extended import current_user as jwt_current_user
 from flask_login import login_required
+from flask_jwt_extended import current_user as jwt_current_user
 from flask_jwt_extended import jwt_required
 
 from App.controllers.staff import (
@@ -23,40 +23,32 @@ def get_staff_action(staff_id):
         return jsonify(staff.to_json())
     return 'Staff not found', 404
 
-@staff_views.route('/reviews', methods=['POST', 'GET'])
-@login_required
-# @jwt_required()
-def create_review_action(): #student_id):
+@staff_views.route('/students/<string:student_id>/reviews', methods=['POST'])
+@jwt_required()
+def create_review_action(student_id):
+    if not jwt_current_user or not isinstance(jwt_current_user, Staff):
+      return 'Unauthorized', 401
 
-  # if request.method == 'POST':
+    student= get_student(str(student_id))
 
-  #   if not jwt_current_user or not isinstance(jwt_current_user, Staff):
-  #     return 'Unauthorized', 401
+    if not student:
+        return jsonify({"error": 'Student does not exist'}), 404
 
-  #   student= get_student(str(student_id))
+    data = request.json
+    if not data['comment']:
+        return "Invalid request data", 400
+    
+    if data['isPositive'] not in (True, False):
+        return jsonify({"message": f"invalid Positivity ({data['isPositive']}). Positive: true or false"}), 400
 
-  #   if not student:
-  #     return jsonify({"error": 'Student does not exist'}), 404
-      
-  #   data = request.json
-  #   if not data['comment']:
-  #     return "Invalid request data", 400
-      
-  #   if data['isPositive'] not in (True, False):
-  #     return jsonify({"message": f"invalid Positivity ({data['isPositive']}). Positive: true or false"}), 400
+    if not get_staff(str(jwt_current_user.ID)):
+        return 'Staff does not exist', 404 
 
-  #   if not get_staff(str(jwt_current_user.ID)):
-  #     return 'Staff does not exist', 404 
-
-  #   review = create_review(jwt_current_user.ID, student_id, data['isPositive'], data['comment'])
-      
-  #   if review:
-  #     return jsonify(review.to_json()), 201
-  
-  #   # return 'Failed to create review', 400
-  
-  return render_template('createreview.html')
-
+    review = create_review(jwt_current_user.ID, student_id, data['isPositive'], data['comment'])
+    
+    if review:
+        return jsonify(review.to_json()), 201
+    return 'Failed to create review', 400
 
 @staff_views.route('/students/search/<string:search_term>', methods=['GET'])
 @jwt_required()
@@ -81,3 +73,13 @@ def get_karma_rankings():
       return jsonify({"message": "No rankings found"}), 204
   else:
     return jsonify({"message": "You are not authorized to perform this action"}), 401 
+  
+
+@staff_views.route('/new_review', methods=['POST', 'GET'])
+# @jwt_required()
+@login_required
+def newReview():
+   return render_template('createreview.html')
+  
+  
+  
