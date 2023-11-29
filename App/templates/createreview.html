@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="../static/createreviewStyle.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Create Review</title>
@@ -33,32 +34,43 @@
     <div class="container" id="content">
         <h1>Create Review</h1>
 
-        <form>
+        <form class="form">
             <div id="name_ID">
                 <div class="form-group">
-                    <label for="lecturerName">Lecturer Name:</label>
+                    <label class="text"  for="lecturerName">Lecturer ID:</label>
                     <input type="text" id="lecturerName" name="lecturerName" placeholder="Enter lecturer name" style="background-color: #a9a5a5;">
                     
                 </div>
 
                 <div class="form-group">
-                    <label for="studentID">Student ID:</label>
+                    <label class="text" for="studentID">Student ID:</label>
                     <input type="text" id="studentID" name="studentID" placeholder="Student ID" style="background-color: #a9a5a5;">
                 </div>
             </div>   
 
             
             <div>
-              <label for="review-type">Type of review</label>
-              <select>
-                <option value="option1">Positive</option>
-                <option value="option2">Negative</option>
-              </select>
-              
+              <label class="text" for="TypeofReview">Type of Review</label>
+            </div>
+            <div class="container-dropdown">
+              <div class="dropdown">
+              <div class="select">
+                <span class="selected"> Positive</span>
+                <div class="caret"></div>
+              </div>
+                <ul class="menu">
+                  <li>Negative</li>
+                  <li class="activate">Positive</li>
+                </ul>
+            </div>
             </div>
 
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" placeholder="Enter review" style="background-color: #a9a5a5;">
+            <div class="description-container">
+              <div class="description-text">
+                <label class="text" for="description">Description</label>
+              </div>
+              <input type="text" id="description" name="description" placeholder="Enter review" style="background-color: #a9a5a5;">
+            </div>
                
             <div id="button">
               <button onclick="openNewReview()">New Review</button>
