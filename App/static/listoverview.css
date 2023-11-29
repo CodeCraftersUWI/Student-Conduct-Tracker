@@ -1,0 +1,39 @@
+#lecturer{
+    padding: 20px;
+    display: flex;
+    line-height: 50px;
+}
+
+#lecturer img{
+    height: 100px;
+    width: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: blue;
+    color: white;
+}
+
+
+#button{
+    float: right;
+}
+
+#button button{
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}

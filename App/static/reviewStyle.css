@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    padding-top: 50px;
+}
+
+#left-container, #right-container {
+    flex: 1;
+    box-sizing: border-box;
+    padding: 20px;
+    padding-left: 0;
+    overflow: hidden;
+}
+
+#left-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10px;
+    height: auto;
+}
+
+#right-container {
+    display:block;
+    padding-left: 50px;
+}
+
+#small, #big{
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#small{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#big img{
+    width: 100%;
+    height: 85%;
+}
+
+#lecturer{
+    display: flex;
+    margin-top: 20px;
+}
+
+#profile{
+    width: 10%;
+    height: auto;
+}
+
+#lecturer p{
+    margin: 0;
+    font-size: 10pt;
+}
+
+#profile img{
+    max-width: 100%;
+}
+
+#reviewdetails{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#arrows{
+    margin-top : 30px;
+}
+
+#rightbtn{
+    margin-left: 80%;
+}
+
+.button img, #arrows img{
+    height: 30px;
+}
+

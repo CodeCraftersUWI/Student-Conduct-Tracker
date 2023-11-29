@@ -1,0 +1,71 @@
+.button {
+  cursor: pointer;
+  top: 252px;
+  left: 1158px;
+  width: 100vw;
+  height: 48px;
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  color: #286dbf;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  outline: none;
+}
+
+.input {
+    top: 339px;
+    left: 496px;
+    width: 354px;
+    height: 65px;
+    padding: 0px 8px;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #a9a5a5;
+    color: #212121;
+    font-size: 16px;
+    line-height: 20px;
+    outline: solid gray;
+  }
+
+form{
+    height: 100vh;
+    margin: 0;
+    padding: 30px;
+    padding-left: 0px;
+}
+
+.form-group{
+    padding: 30px;
+    padding-left: 0px;
+}
+
+
+
+
+select, input {
+    width: 120px; 
+    padding: 8px;
+    box-sizing: border-box;
+} 
+
+#name_ID{
+  display: flex;
+}
+
+#description{
+  height: 30%;
+  width: 100%;
+}
+
+#button button{
+  background-color: blue;
+  color: white;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  align-content: center;
+}
