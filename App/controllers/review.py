@@ -1,6 +1,7 @@
 from App.models import Review, Karma, Student, VoteRecords
 from App.controllers.voteRecords import edit_vote_record, add_vote_record, get_vote_record_by_staff_and_review
 from App.database import db
+from sqlalchemy import desc
 
 def get_reviews(): 
     return db.session.query(Review).all()
@@ -101,3 +102,6 @@ def updateKarma(review):
     student_karma = db.session.query(Karma).get(student.karmaID)
     student_karma.calculateScore(student)
     student_karma.updateRank()
+
+def get_latest_reviews():
+    return Review.query.order_by(desc(Review.created)).limit(5).all()

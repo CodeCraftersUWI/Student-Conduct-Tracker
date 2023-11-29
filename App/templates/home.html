@@ -20,8 +20,8 @@
             <ul class="right-side">
                 <li><a href="#">Review</a></li>
                 <li><a href="#">Account</a></li>
+                <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
             </ul>
-            
             <ul class="left-side">
                 <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
             </ul>
@@ -35,7 +35,7 @@
         <div class="container">
             <div class="search_wrap search_wrap_1">
                 <div class="search_box">
-                    <input type="text" class="input" placeholder="search...">
+                    <input type="text" class="input" placeholder="Enter Student ID...">
                     <div class="btn btn_common">
                         <i class='bx bx-search'></i></button>
                     </div>
@@ -50,14 +50,17 @@
                <h3>View My Reviews</h3>
             </button>
       
-            <button class="event" data-name="p-2">
-               <img src="https://i.postimg.cc/tgph56pv/gavel.png" alt="">
-               <h3>onions</h3>
-            </button>
+            <a href = "/reviews">
+                <button class="event" data-name="p-2">
+                    <img src="https://i.postimg.cc/tgph56pv/gavel.png" alt="">
+                    <h3>Create A Review</h3>
+                </button>
+            </a>
+            
       
             <button class="event" data-name="p-3">
                <img src="https://i.postimg.cc/NMWFNhRG/exclamation.png" alt="">
-               <h3>tomatoes</h3>
+               <h3>Top Ranking Students</h3>
             </button>
          </div>
     </div>
@@ -77,78 +80,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Zinzu Chan Lee</span></p></td>
-                            <td> 4325665 </td>
-                            <td> 17 Dec, 2022 </td>
-                            <td>
-                                <p class="status delivered">Positive</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Jeet Saru</span></p></td>
-                            <td> 45525435 </td>
-                            <td> 27 Aug, 2023 </td>
-                            <td>
-                                <p class="status cancelled">Negative</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Sonal Gharti</span></p></td>
-                            <td> 4352545 </td>
-                            <td> 14 Mar, 2023 </td>
-                            <td>
-                                <p class="status shipped">Positive</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Alson GC</span></p></td>
-                            <td> 4253525 </td>
-                            <td> 25 May, 2023 </td>
-                            <td>
-                                <p class="status delivered">Negative</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Sarita Limbu</span></p></td>
-                            <td> 24354352 </td>
-                            <td> 23 Apr, 2023 </td>
-                            <td>
-                                <p class="status pending">Positive</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Alex Gonley</span></p></td>
-                            <td> 34535454 </td>
-                            <td> 23 Apr, 2023 </td>
-                            <td>
-                                <p class="status cancelled">Negative</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Jeet Saru</span></p></td>
-                            <td> 425235435 </td>
-                            <td> 20 May, 2023 </td>
-                            <td>
-                                <p class="status delivered">Positive</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Aayat Ali Khan</span></p></td>
-                            <td> 23545235 </td>
-                            <td> 30 Feb, 2023 </td>
-                            <td>
-                                <p class="status pending">Negative</p>
-                            </td>
-                        </tr>
-                        <tr >
-                            <td><p><span style="cursor: pointer;" onclick="handleClick()">Alson GC</span></p></td>
-                            <td> 352454 </td>
-                            <td> 22 Dec, 2023 </td>
-                            <td>
-                                <p class="status cancelled">Positive</p>
-                            </td>
-                        </tr>
+                        {% for review in reviews %}
+                            <tr>
+                                <td>
+                                    <p>
+                                        <span style="cursor: pointer;" onclick="handleClick()">
+                                            {{ review.reviewer.firstname }} {{ review.reviewer.lastname }}
+                                        </span>
+                                    </p>
+                                </td>
+                                <td>{{ review.studentID }}</td>
+                                <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    {% if review.isPositive %}
+                                        <p class="status delivered">Positive</p>
+                                    {% else %}
+                                        <p class="status cancelled">Negative</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </section>
