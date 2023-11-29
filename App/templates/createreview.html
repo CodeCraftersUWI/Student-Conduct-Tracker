@@ -20,11 +20,11 @@
           <ul id="nav-mobile" class="left">
             <li ><a href="/" style="color: black;">Review</a></li>
             <li><a href="/" style="color: black;">Account</a></li>
-            <li><a href="/" style="color: black;">Home</a></li>
+            <li><a href="{{ url_for('index_views.home') }}" style="color: black;">Home</a></li>
             </ul>
           </ul>
           <ul id="nav-mobile" class="right">
-            <li><a href="/logout" style="color: black;">Logout</a></li>
+            <li><a href="{{ url_for('auth_views.logout_action') }}" style="color: black;">Logout</a></li>
           </ul>
         </div>
       </div>

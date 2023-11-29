@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for, session
+import ast
+from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for, session, get_flashed_messages
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import login_required, login_user, current_user, logout_user
 from datetime import datetime, timedelta
@@ -22,6 +23,9 @@ def identify_page():
 
 @auth_views.route('/login', methods=['POST', 'GET'])
 def login_action():
+    messages = get_flashed_messages()
+    
+    
     if request.method == 'POST':
         data = request.form
         user_id = data.get('ID')  # Get the entered ID
@@ -29,7 +33,7 @@ def login_action():
 
         user = login(user_id, password)
         if user:
-            flash('Logged in successfully.')
+            # flash('Logged in successfully.')
             session['logged_in'] = True
             login_user(user)
             token = jwt_authenticate(user_id, password)
@@ -40,13 +44,16 @@ def login_action():
         # return jsonify({'error': error_message}), 401
         return redirect('/login')
     
-    return render_template('login.html')
+    messages = get_flashed_messages()
+    return render_template('login.html', messages=messages)
 
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
     logout_user()
-    return redirect('/login')
+    flash('You are now logged out.')
+    return redirect(url_for('auth_views.login_action', _external=True))
+    # return redirect(('/login'))
    
 
 @auth_views.route('/api/login', methods=['POST'])

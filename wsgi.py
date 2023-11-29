@@ -92,6 +92,28 @@ def createReview():
     # create_review(2, 51, True, "Good Job")
     staff = get_staff(2)
     addVote(1, staff, "downvote")
+
+
+@user_cli.command("testing", help="Create a review")
+def test():
+    db.drop_all()
+    db.create_all()
+
+    admin= create_user('bob', 'boblast' , 'bobpass')
+    staff = create_staff(admin, "Jerrelle", "Johnson", "2", "2", "jerrelle9@icloud.com", 4)
+
+    for ID in range(816029801, 816029811): 
+        contact= generate_random_contact_number()
+        student= create_student(admin, str(ID),
+            randomname.get_name(), 
+            randomname.get_name(),
+            contact,
+            random.choice(['Full-Time','Part-Time', 'Evening']),
+            str(random.randint(1, 8))
+        )
+        create_review(staff.ID, ID, random.choice([True, False]), "reviewing...") 
+        db.session.add(student)
+        db.session.commit()
     
 
 app.cli.add_command(user_cli) # add the group to the cli
