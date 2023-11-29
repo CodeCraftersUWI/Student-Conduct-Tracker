@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify, render_template, redirect, url_fo
 from App.controllers import Student, Staff
 from App.controllers.user import get_staff, get_student
 from App.database import db
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask_jwt_extended import current_user as jwt_current_user
 from flask_jwt_extended import jwt_required
 
@@ -76,21 +76,24 @@ def get_karma_rankings():
   
 
 @staff_views.route('/new_review', methods=['POST', 'GET'])
-# @login_required
+@login_required
 def newReview():
   if request.method == 'POST':
+     if current_user.is_authenticated and isinstance(current_user, Staff):
+        staff_id = current_user.get_id()
+        print(f"Staff_id: {staff_id}")
     # staff_ID = request.form['staffID']
-    staff_id = jwt_current_user.staff_id
-    student_id = request.form['studentID']
-    review_type = request.form['reviewType']
-    description = request.form['description']
+    # staff_id = jwt_current_user.staff_id
+    # student_id = request.form['studentID']
+    # review_type = request.form['reviewType']
+    # description = request.form['description']
 
-    print(f"Staff_id: {staff_id}")
+    
     # staff = get_staff(staff_ID)
     # flash('Invalid staff ID. Please enter a valid staff ID.', 'error')
     # return redirect(url_for('your_form_route'))
       
-    return "Review submitted successfully"  # Replace with the appropriate response
+    # return "Review submitted successfully"  # Replace with the appropriate response
     
   return render_template('createreview.html')
   

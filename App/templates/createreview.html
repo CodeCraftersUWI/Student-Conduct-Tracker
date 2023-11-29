@@ -38,7 +38,7 @@
     <div class="container" id="content">
         <h1>Create Review</h1>
 
-        <form class="form">
+        <form class="form" action = "{{ url_for('staff_views.newReview') }}"  method = "post">
           <div id="name_ID">
             <div class="form-group">
               <label class="text" for="staffID">Lecturer ID:</label>
