@@ -50,16 +50,18 @@
               <label class="text" for="TypeofReview">Type of Review</label>
             </div>
             <div class="container-dropdown">
-              <div class="dropdown">
-              <div class="select">
-                <span class="selected"> Positive</span>
-                <div class="caret"></div>
+              <div class="container-dropdown">
+                <div class="dropdown">
+                  <div class="select" onclick="toggleDropdown()">
+                    <span class="selected">Positive</span>
+                    <div class="caret"></div>
+                  </div>
+                  <ul class="menu" id="dropdownMenu">
+                    <li onclick="selectOption('Negative')">Negative</li>
+                    <li class="activate" onclick="selectOption('Positive')">Positive</li>
+                  </ul>
+                </div>
               </div>
-                <ul class="menu">
-                  <li>Negative</li>
-                  <li class="activate">Positive</li>
-                </ul>
-            </div>
             </div>
 
             <div class="description-container">
@@ -75,6 +77,18 @@
         </form>
 
     </div>
+    <script>
+      function toggleDropdown() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.classList.toggle('menu-open');
+      }
+    
+      function selectOption(option) {
+        const selectedText = document.querySelector('.selected');
+        selectedText.textContent = option;
+        toggleDropdown();
+      }
+    </script>
   </body>
 </html>
 
