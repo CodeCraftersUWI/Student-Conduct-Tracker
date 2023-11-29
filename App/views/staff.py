@@ -1,6 +1,6 @@
 import random
 import string
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
 from App.controllers import Student, Staff
 from App.controllers.user import get_staff, get_student
 from App.database import db
@@ -76,10 +76,23 @@ def get_karma_rankings():
   
 
 @staff_views.route('/new_review', methods=['POST', 'GET'])
-# @jwt_required()
-@login_required
+# @login_required
 def newReview():
-   return render_template('createreview.html')
+  if request.method == 'POST':
+    # staff_ID = request.form['staffID']
+    staff_id = jwt_current_user.staff_id
+    student_id = request.form['studentID']
+    review_type = request.form['reviewType']
+    description = request.form['description']
+
+    print(f"Staff_id: {staff_id}")
+    # staff = get_staff(staff_ID)
+    # flash('Invalid staff ID. Please enter a valid staff ID.', 'error')
+    # return redirect(url_for('your_form_route'))
+      
+    return "Review submitted successfully"  # Replace with the appropriate response
+    
+  return render_template('createreview.html')
   
   
   
