@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="../static/toprankingStyles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='toprankingStyles.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="#">Review</a></li>
+                <li><a href="#">Account</a></li>
+                <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
+            </ul>
+            <ul class="left-side">
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="account-container">
+            <h1>Top Ranking Students</h1>
+        </div>
+        <div class="user-reviews">
+            <main class="table">
+                <section class="table__body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> Ranking <span class="icon-arrow"></span></th>
+                                <th> Student ID <span class="icon-arrow"></span></th>
+                                <th> Karma Score <span class="icon-arrow"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for review in reviews %}
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <span style="cursor: pointer;" onclick="handleClick()">
+                                                {{ review.reviewer.firstname }} {{ review.reviewer.lastname }}
+                                            </span>
+                                        </p>
+                                    </td>
+                                    <td>{{ review.studentID }}</td>
+                                    <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+
+    </div>
+</body>
+</html>
