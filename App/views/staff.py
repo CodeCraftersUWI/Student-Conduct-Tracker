@@ -1,9 +1,10 @@
 import random
 import string
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from App.controllers import Student, Staff
 from App.controllers.user import get_staff, get_student
 from App.database import db
+from flask_login import login_required
 from flask_jwt_extended import current_user as jwt_current_user
 from flask_jwt_extended import jwt_required
 
@@ -72,3 +73,13 @@ def get_karma_rankings():
       return jsonify({"message": "No rankings found"}), 204
   else:
     return jsonify({"message": "You are not authorized to perform this action"}), 401 
+  
+
+@staff_views.route('/new_review', methods=['POST', 'GET'])
+# @jwt_required()
+@login_required
+def newReview():
+   return render_template('createreview.html')
+  
+  
+  
