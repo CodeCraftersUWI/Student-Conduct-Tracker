@@ -89,7 +89,7 @@ def newReview():
     student = get_student(student_id)
     if not student:
       flash("Student ID not found")
-      redirect('/newReview')
+      return redirect('/new_review')
     
 
     review_type = request.form['reviewType']

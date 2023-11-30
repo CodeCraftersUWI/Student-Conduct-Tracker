@@ -106,4 +106,4 @@ def updateKarma(review):
     student_karma.updateRank()
 
 def get_latest_reviews():
-    return Review.query.order_by(desc(Review.created)).limit(5).all()
+    return Review.query.order_by(desc(Review.created)).limit(10).all()

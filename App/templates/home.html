@@ -12,6 +12,10 @@
         function handleClick() {
             alert('Text clicked!');
         }
+
+        function handleRowClick(reviewID) {
+            console.log('Row clicked with ID:', reviewID);
+        }
     </script>
 </head>
 <body>
@@ -73,15 +77,18 @@
                 <table>
                     <thead>
                         <tr>
+                            <th> Review ID <span class="icon-arrow"></span></th>
                             <th> Created by <span class="icon-arrow"></span></th>
                             <th> Student ID <span class="icon-arrow"></span></th>
                             <th> Created on <span class="icon-arrow"></span></th>
                             <th> Type of Review <span class="icon-arrow"></span></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         {% for review in reviews %}
-                            <tr>
+                            <tr onclick="handleRowClick('{{ review.ID }}')">
+                                <td>{{review.ID}}</td>
                                 <td>
                                     <p>
                                         <span style="cursor: pointer;" onclick="handleClick()">
@@ -91,6 +98,7 @@
                                 </td>
                                 <td>{{ review.studentID }}</td>
                                 <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                <!-- <td>{{ review.created}}</td> -->
                                 <td>
                                     {% if review.isPositive %}
                                         <p class="status delivered">Positive</p>
