@@ -15,7 +15,7 @@
 
         function handleRowClick(reviewID) {
             // Making a GET request using fetch
-            fetch(`/review_details/${reviewID}`, {
+            fetch(`/review_details/${reviewID} `, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -68,12 +68,14 @@
             <div class="vote">
                 <div class="post-ratings-container">
                   <div class="post-rating">
-                    <button class="post-rating-button material-symbols-outlined thumbs-up">thumb_up</button>
-                    <span class="post-rating-count">100</span>
+                    <button class="post-rating-button material-symbols-outlined thumbs-up"
+                    onclick="handleVote('{{ review.ID }}', 'upvote')">thumb_up</button>
+                    <span class="post-rating-count">{{review.upvotes}}</span>
                   </div>
                   <div class="post-rating">
-                    <button class="post-rating-button material-symbols-outlined thumbs-down">thumb_down</button>
-                    <span class="post-rating-count">1000</span>
+                    <button class="post-rating-button material-symbols-outlined thumbs-down"
+                    onclick="handleVote('{{ review.ID }}', 'downvote')">thumb_down</button>
+                    <span class="post-rating-count">{{review.downvotes}}</span>
                   </div>
                 </div>
               </div>
@@ -88,20 +90,43 @@
         </div>
     </div>
     <script>
-        
-        const thumbsUp = document.querySelector('.thumbs-up');
-        const thumbsDown = document.querySelector('.thumbs-down');
+        function handleVote(reviewID, voteType) {
+            fetch(`/review_details/${reviewID}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ action: voteType }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); 
+                } else {
+                    throw new Error('Error voting');
+                }
+            })
+            .then(data => {
+                const upvotesElement = document.querySelector('.post-rating-count');
+                const downvotesElement = document.querySelectorAll('.post-rating-count')[1];
 
-        
-        thumbsUp.addEventListener('click', () => {
-            thumbsUp.classList.toggle('active');
-            thumbsDown.classList.remove('active');
-        });
+                upvotesElement.textContent = data.upvotes;
+                downvotesElement.textContent = data.downvotes;
 
-        thumbsDown.addEventListener('click', () => {
-            thumbsDown.classList.toggle('active');
-            thumbsUp.classList.remove('active');
-        });
+                const thumbsUp = document.querySelector('.thumbs-up');
+                const thumbsDown = document.querySelector('.thumbs-down');
+
+                if (voteType === 'upvote') {
+                    thumbsUp.classList.add('active');
+                    thumbsDown.classList.remove('active');
+                } else if (voteType === 'downvote') {
+                    thumbsDown.classList.add('active');
+                    thumbsUp.classList.remove('active');
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
     </script>
 </body>
 

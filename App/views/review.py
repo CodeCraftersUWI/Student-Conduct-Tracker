@@ -21,15 +21,21 @@ from App.controllers.review import (
 review_views = Blueprint("review_views", __name__, template_folder='../templates')
 
 # Route to list all reviews (you can customize this route as needed)
-@review_views.route('/review_details/<int:review_id>', methods=['GET'])
+@review_views.route('/review_details/<int:review_id>', methods=['GET', 'POST'])
 @login_required
 def view_review(review_id):
     if not isinstance(current_user, Staff):
         return "Unauthorized", 401
-        
+    
+    if request.method == "POST":
+        vote_type = request.json.get('action')
+        addVote(review_id, current_user, vote_type)
+        updated_review = get_review(review_id)
+        return jsonify({'upvotes': updated_review.upvotes, 'downvotes': updated_review.downvotes})
+        # return redirect(url_for('review_views.view_review', review_id=review_id))
+
     review = get_review(review_id)
     if review:
-        # staff = get_staff(current_user.get_id())
         return render_template('reviewdetails.html', review_id=review_id, review = review) 
         
 
