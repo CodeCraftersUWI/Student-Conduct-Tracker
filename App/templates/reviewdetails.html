@@ -1,17 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>UWI Student Conduct Tracker</title>
-        <link rel="stylesheet" href="../static/reviewStyle.css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='reviewStyle.css') }}">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="../static/reviewStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reviewStyle.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,1,200" />
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+
 <body>
-    
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="#">Review</a></li>
+                <li><a href="#">Account</a></li>
+                <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
+            </ul>
+            <ul class="left-side">
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <div class="container">
+        <div class="image-container">
+            <div class="small-img">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6jagr881bJv-DLIj62GHOYG25EzcLrmr1Iw&usqp=CAU"
+                    alt="Image 2">
+                <img src="https://st5.depositphotos.com/1518767/66907/i/450/depositphotos_669075156-stock-photo-portrait-happy-african-american-elementary.jpg"
+                    alt="Image 3">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFzlmIAAa7xWpH-DtJZcovTlPoCvUAtiMlzw&usqp=CAU"
+                    alt="Image 3">
+            </div>
+            <div class="large-img">
+                <img src="https://as1.ftcdn.net/v2/jpg/05/65/59/72/1000_F_565597248_TYAIlsbiQANu9A9Vmyb6ClYEwv5qokAE.jpg"
+                    alt="Image 1">
+            </div>
+        </div>
+        <div class="review-container">
+            <div class="student-id">
+                <h1>Student ID:</h1>
+                <h1>4489349034</h1>
+            </div>
+            <div class="lecturer-details">
+                <img
+                    src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg">
+                <h3>Lecturer</h3>
+            </div>
+            <div class="review-type">
+                <h3>Positive</h3>
+                <h3>Review</h3>
+            </div>
+            <div class="review">
+                <h4>ufiuhfufhbiw ewufhiwuhfiewufh wfhwiufhi fiwuefhiwfh</h4>
+            </div>
+            <div class="vote">
+                <div class="post-ratings-container">
+                  <div class="post-rating">
+                    <button class="post-rating-button material-symbols-outlined thumbs-up">thumb_up</button>
+                  </div>
+                  <div class="post-rating">
+                    <button class="post-rating-button material-symbols-outlined thumbs-down">thumb_down</button>
+                  </div>
+                </div>
+              </div>
+              <div class="arrows">
+                <a href="#" class="arrow-button" onclick="previousSlide()">
+                  <img src="https://cdn-icons-png.flaticon.com/128/271/271220.png" alt="Previous">
+                </a>
+                <a href="#" class="arrow-button" onclick="nextSlide()">
+                  <img src="https://cdn-icons-png.flaticon.com/128/271/271228.png" alt="Next">
+                </a>
+              </div>
+        </div>
+    </div>
+    <script>
+        
+        const thumbsUp = document.querySelector('.thumbs-up');
+        const thumbsDown = document.querySelector('.thumbs-down');
+
+        
+        thumbsUp.addEventListener('click', () => {
+            thumbsUp.classList.toggle('active');
+            thumbsDown.classList.remove('active');
+        });
+
+        thumbsDown.addEventListener('click', () => {
+            thumbsDown.classList.toggle('active');
+            thumbsUp.classList.remove('active');
+        });
+    </script>
 </body>
+
 </html>
 
 
