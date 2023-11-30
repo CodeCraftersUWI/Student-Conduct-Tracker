@@ -44,9 +44,25 @@
                 console.error('There was a problem with the fetch operation:', error);
             });
         }
+
+        function searchStudent() {
+            var studentId = document.getElementById('studentIdInput').value;
+            console
+            handleStudentIdClick(studentId)
+        }
     </script>
 </head>
 <body>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <!-- <ul> <li>{{ messages[0] }}</li></ul> -->
+                <script>alert("{{ messages[0] }}"); </script>
+            {% endif %}
+        {% endwith %}
+    </div>
+
     <header class="header">
         <nav class="navbar">
             <ul class="right-side">
@@ -66,9 +82,9 @@
         <div class="container">
             <div class="search_wrap search_wrap_1">
                 <div class="search_box">
-                    <input type="text" class="input" placeholder="Enter Student ID...">
+                    <input type="text" class="input" id= "studentIdInput" placeholder="Enter Student ID...">
                     <div class="btn btn_common">
-                        <button><i class='bx bx-search'></i></button>
+                        <button onclick="searchStudent()"><i class='bx bx-search'></i></button>
                     </div>
                 </div>
             </div>

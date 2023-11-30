@@ -5,6 +5,7 @@ from flask_login import login_required, login_user, current_user, logout_user
 from datetime import datetime, timedelta
 
 from.index import index_views
+from App.models import Staff, Admin
 
 from App.controllers import (
     create_user,
@@ -23,8 +24,6 @@ def identify_page():
 
 @auth_views.route('/login', methods=['POST', 'GET'])
 def login_action():
-    messages = get_flashed_messages()
-    
     if request.method == 'POST':
         data = request.form
         user_id = data.get('ID')  # Get the entered ID
@@ -32,11 +31,14 @@ def login_action():
 
         user = login(user_id, password)
         if user:
-            # flash('Logged in successfully.')
-            session['logged_in'] = True
-            login_user(user)
-            token = jwt_authenticate(user_id, password)
-            return redirect('/home')
+            if isinstance(user, Staff):
+                session['logged_in'] = True
+                login_user(user)
+                return redirect('/home')
+            
+            message = {"message": "Admin successfully logged in"}
+            return jsonify(message), 200
+        
         
         flash('Invalid username or password')
         # error_message = 'Incorrect ID or password given'

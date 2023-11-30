@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, abort, url_for
+from flask import Blueprint, jsonify, redirect, render_template, request, abort, url_for, flash
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import current_user, login_required, current_user
 from App.controllers import Review, Staff, get_latest_karma_score, get_karma_by_id
@@ -45,10 +45,14 @@ def get_reviews_of_student(student_id):
     if not isinstance(current_user, Staff):
       return "Unauthorized", 401
     
-    reviews = get_reviews_for_student(student_id)
     student = search_student(student_id)
-    karma = get_karma_by_id(student.karmaID)
-    return render_template('studentReviews.html', reviews = reviews, student = student, karma = karma)
+    if student:
+        reviews = get_reviews_for_student(student_id)
+        karma = get_karma_by_id(student.karmaID)
+        return render_template('studentReviews.html', reviews = reviews, student = student, karma = karma)
+    
+    flash(f"{student_id} does not exist! Please enter a valid student ID")
+    return redirect('/home')
 
 # Route to get reviews by staff ID
 @review_views.route("/staff/<string:staff_id>/reviews", methods=["GET"])

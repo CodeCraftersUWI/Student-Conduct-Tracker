@@ -1,5 +1,5 @@
 import random
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, get_flashed_messages
 from App.models import db
 from App.controllers import create_user, create_staff, create_student,create_review, get_latest_reviews
 from flask_login import login_required
@@ -48,10 +48,14 @@ def index_page():
 
     
     return render_template('welcome.html')
-    # return jsonify({'database initialised'})
+    
 
 @index_views.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
+    messages = get_flashed_messages()
     reviews = get_latest_reviews()
+
+    if messages:
+        return render_template('home.html', reviews=reviews, messages=messages)
     return render_template('home.html', reviews=reviews)
