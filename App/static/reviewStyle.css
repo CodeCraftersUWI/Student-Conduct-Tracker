@@ -81,8 +81,8 @@ body {
 }
 
 .container {
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
   padding-top: 50px;
   padding-left: 50px;
   padding-right: 50px;
@@ -113,6 +113,12 @@ justify-content: space-between;
 .small-img img {
   width: 153px;
   height: 166px;
+  
+}
+
+.lecturer-details h3{
+    padding-top: 5px;
+    padding-left: 10px;
 }
 
 .large-img {
@@ -128,88 +134,108 @@ justify-content: space-between;
   height: 524px;
 }
 
-.review-container{
-
+.review-container {
+  padding-left: 100px;
 }
 
-.student-id{
-    display: flex;
+.student-id {
+  display: flex;
 }
 
-/* .container {
-    display: flex;
-    padding-top: 50px;
+.student-id h1{
+    padding-right: 3px;
 }
 
-#left-container, #right-container {
-    flex: 1;
-    box-sizing: border-box;
-    padding: 20px;
-    padding-left: 0;
-    overflow: hidden;
+.lecturer-details {
+  padding-top: 30px;
+  display: flex;
 }
 
-#left-container {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 10px;
-    height: auto;
+.lecturer-details img {
+  top: 288px;
+  left: 886px;
+  width: 40px;
+  height: 40px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-#right-container {
-    display:block;
-    padding-left: 50px;
+.review-type {
+  padding-top: 20px;
+  display: flex;
 }
 
-#small, #big{
-    box-sizing: border-box;
-    overflow: hidden;
+.review-type h3{
+    padding-right: 3px;
 }
 
-#small{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.review {
+  padding-top: 40px;
+  color: #212121;
+  font-size: 16px;
+  font-family: "Poppins";
+  line-height: 22px;
+  max-width: 470px; 
+  margin: 20px auto;
 }
 
-#big img{
-    width: 100%;
-    height: 85%;
+.vote {
+  width: 466px;
+  height: 50px;
 }
 
-#lecturer{
-    display: flex;
-    margin-top: 20px;
+.post-ratings-container {
+  display: flex;
+  justify-content: start;
+  padding: 12px 0;
 }
 
-#profile{
-    width: 10%;
-    height: auto;
+.post-rating {
+  display: flex;
+  align-items: center;
+  cursor: default;
 }
 
-#lecturer p{
-    margin: 0;
-    font-size: 10pt;
+.post-rating:not(:last-child) {
+  margin-right: 12px;
 }
 
-#profile img{
-    max-width: 100%;
+.thumbs-up.active,
+.thumbs-down.active {
+  color: #009578;
 }
 
-#reviewdetails{
-    margin-top: 30px;
-    margin-bottom: 20px;
+.post-rating-button {
+  margin-right: 6px;
+  cursor: pointer;
+  color: #555555;
 }
 
-#arrows{
-    margin-top : 30px;
+.post-rating:not(.post-rating-selected) > .post-rating-button:hover {
+  color: #000000;
 }
 
-#rightbtn{
-    margin-left: 80%;
+.arrows {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 50px;
 }
 
-.button img, #arrows img{
-    height: 30px;
+.arrow-button {
+  background: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%; /* Make it circular */
+  transition: background-color 0.3s; /* Add a smooth transition */
 }
- */
+
+.arrow-button:hover {
+    background-color: #ccc; /* Grey background on hover */
+  }
+
+.arrow-button img {
+  width: 30px;
+  height: 30px;
+}
