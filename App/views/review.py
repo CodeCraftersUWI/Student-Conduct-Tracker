@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, redirect, render_template, request, abort, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import current_user, login_required, current_user
-from App.controllers import Review, Staff
+from App.controllers import Review, Staff, get_latest_karma_score, get_karma_by_id
 from App.controllers.user import get_staff
 from App.controllers.student import search_student
 from App.controllers.voteRecords import get_vote_record_by_staff_and_review
@@ -14,7 +14,7 @@ from App.controllers.review import (
     get_reviews,
     get_reviews_for_student, 
     get_review,
-    addVote
+    addVote,
 )
 
 # Create a Blueprint for Review views
@@ -37,78 +37,18 @@ def view_review(review_id):
     review = get_review(review_id)
     if review:
         return render_template('reviewdetails.html', review_id=review_id, review = review) 
-        
-
-    
-    
-
-
-
-#Route to upvote review 
-@review_views.route('/review/<int:review_id>/upvote', methods=['POST'])
-@jwt_required()
-def upvote (review_id):
-    if not jwt_current_user or not isinstance(jwt_current_user, Staff):
-      return "You are not authorized to upvote this review", 401
-      
-    vote_type = "upvote"
-    review = get_review(review_id)
-    staff = get_staff(jwt_current_user.ID)
-    if review:
-        # Check if staff member already voted
-        vote_record = get_vote_record_by_staff_and_review(staff.ID, review_id)
-        if vote_record:
-            # Staff has voted before
-            if vote_record.type == vote_type:
-                # Staff wants to vote the same way they voted before, return current votes
-                return jsonify(review.to_json(), 'Review Already Upvoted'), 201 
-            else:
-                new_votes= addVote(review_id, staff, vote_type)
-                return jsonify(review.to_json(), 'Review Upvoted'), 200
-        else:
-            new_votes= addVote(review_id, staff, vote_type)
-            return jsonify(review.to_json(), 'Review Upvoted'), 200
-    else:
-        return 'Review does not exist', 404
-
-
-
-#Route to downvote review 
-@review_views.route('/review/<int:review_id>/downvote', methods=['POST'])
-@jwt_required()
-def downvote (review_id):
-    if not jwt_current_user or not isinstance(jwt_current_user, Staff):
-      return "You are not authorized to downvote this review", 401
-  
-    vote_type = "downvote"
-    review = get_review(review_id)
-    staff = get_staff(jwt_current_user.ID)
-    if review:
-        # Check if staff member already voted
-        vote_record = get_vote_record_by_staff_and_review(staff.ID, review_id)
-        if vote_record:
-            if vote_record.type == vote_type:
-                # Staff wants to vote the same way they voted before, return current votes
-                return jsonify(review.to_json(), 'Review Already Downvoted'), 201 
-            else:
-                new_votes= addVote(review_id, staff, vote_type)
-                return jsonify(review.to_json(), 'Review Downvoted'), 200
-        else:
-            new_votes= addVote(review_id, staff, vote_type)
-            return jsonify(review.to_json(), 'Review Downvoted'), 200
-    else:
-        return 'Review does not exist', 404
 
 # Route to get reviews by student ID
 @review_views.route("/student/<string:student_id>/reviews", methods=["GET"])
+@login_required
 def get_reviews_of_student(student_id):
-    if search_student(student_id):
-        reviews = get_reviews_for_student(student_id)
-        if reviews:
-            return jsonify([review.to_json() for review in reviews]), 200
-        else:
-            return "No reviews found for the student", 404
-    return "Student does not exist", 404
+    if not isinstance(current_user, Staff):
+      return "Unauthorized", 401
+    
+    reviews = get_reviews_for_student(student_id)
+    student = search_student(student_id)
+    karma = get_karma_by_id(student.karmaID)
+    return render_template('studentReviews.html', reviews = reviews, student = student, karma = karma)
 
 # Route to get reviews by staff ID
 @review_views.route("/staff/<string:staff_id>/reviews", methods=["GET"])
