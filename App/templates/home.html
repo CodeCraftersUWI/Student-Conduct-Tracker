@@ -14,7 +14,26 @@
         }
 
         function handleRowClick(reviewID) {
-            console.log('Row clicked with ID:', reviewID);
+            // Making a GET request using fetch
+            fetch(`/review_details/${reviewID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                // You can add more configurations if needed (e.g., headers, body)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Handle the response or redirect if needed
+                // For example, if you want to redirect to the review details page:
+                window.location.href = `/review_details/${reviewID}`;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                // Handle errors or show a message to the user
+            });
         }
     </script>
 </head>

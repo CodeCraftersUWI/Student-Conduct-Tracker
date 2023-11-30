@@ -99,9 +99,9 @@ def newReview():
     else:
       is_positive = False
 
-    create_review(staff_id, student_id, is_positive, description)
-    # return redirect("/home")
-    return render_template('reviewdetails.html')
+    review = create_review(staff_id, student_id, is_positive, description)
+    return redirect(f"/review_details/{review.ID}")
+    # return render_template('reviewdetails.html')
     
     # staff = get_staff(staff_ID)
     # flash('Invalid staff ID. Please enter a valid staff ID.', 'error')

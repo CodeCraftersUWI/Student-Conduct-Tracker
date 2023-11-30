@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, redirect, render_template, request, abort, url_for
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
-from flask_login import current_user
+from flask_login import current_user, login_required, current_user
 from App.controllers import Review, Staff
 from App.controllers.user import get_staff
 from App.controllers.student import search_student
@@ -21,19 +21,22 @@ from App.controllers.review import (
 review_views = Blueprint("review_views", __name__, template_folder='../templates')
 
 # Route to list all reviews (you can customize this route as needed)
-@review_views.route('/reviews', methods=['GET'])
-def list_reviews():
-    reviews = get_reviews()
-    return jsonify([review.to_json() for review in reviews]), 200
+@review_views.route('/review_details/<int:review_id>', methods=['GET'])
+@login_required
+def view_review(review_id):
+    if not isinstance(current_user, Staff):
+        return "Unauthorized", 401
+        
+    review = get_review(review_id)
+    if review:
+        # staff = get_staff(current_user.get_id())
+        return render_template('reviewdetails.html', review_id=review_id, review = review) 
+        
 
-# # Route to view a specific review and vote on it
-# @review_views.route('/reviews/<int:review_id>', methods=['GET',])
-# def view_review(review_id):
-#     review = get_review(review_id)
-#     if review:
-#         return jsonify(review.to_json())
-#     else: 
-#         return 'Review does not exist', 404
+    
+    
+
+
 
 #Route to upvote review 
 @review_views.route('/review/<int:review_id>/upvote', methods=['POST'])
