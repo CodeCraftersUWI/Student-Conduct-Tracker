@@ -6,21 +6,20 @@ class Student(db.Model):
 	ID = db.Column(db.String(10), primary_key=True)
 	firstname = db.Column(db.String(120), nullable=False)
 	lastname = db.Column(db.String(120), nullable=False)
-	contact = db.Column(db.String(30), nullable=False)
+	# contact = db.Column(db.String(30), nullable=False)
 	studentType = db.Column(db.String(30))  #full-time, part-time or evening
 	yearOfStudy = db.Column(db.Integer, nullable=False)
 	reviews = db.relationship('Review', backref='student', lazy='joined')
 	karmaID = db.Column(db.Integer, db.ForeignKey('karma.karmaID'))
 
   #When student is newly created there would be no reviews or karma yet
-	def __init__(self, studentID, firstname, lastname, contact, studentType, yearofStudy):
+	def __init__(self, studentID, firstname, lastname, studentType, yearofStudy):
 		self.firstname = firstname
 		self.lastname = lastname
 		self.ID = studentID
-		self.contact = contact
 		self.studentType = studentType
 		self.yearOfStudy = yearofStudy
-		self.reviews = []
+		self.reviews = [] 
 	
 	def get_id(self):
 		return self.ID
@@ -32,7 +31,7 @@ class Student(db.Model):
         "studentID": self.ID,
         "firstname": self.firstname,
         "lastname": self.lastname,
-        "contact": self.contact,
+        # "contact": self.contact,
         "studentType": self.studentType,
         "yearOfStudy": self.yearOfStudy,
         "reviews": [review.to_json() for review in self.reviews],

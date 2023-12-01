@@ -29,6 +29,7 @@ def view_review(review_id):
     
     if request.method == "POST":
         vote_type = request.json.get('action')
+        # print(vote_type)
         addVote(review_id, current_user, vote_type)
         updated_review = get_review(review_id)
         return jsonify({'upvotes': updated_review.upvotes, 'downvotes': updated_review.downvotes})

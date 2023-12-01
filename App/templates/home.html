@@ -104,11 +104,12 @@
                 </button>
             </a>
             
-      
-            <button class="event" data-name="p-3">
-               <img src="https://i.postimg.cc/NMWFNhRG/exclamation.png" alt="">
-               <h3>Top Ranking Students</h3>
-            </button>
+            <a href = "{{ url_for('staff_views.get_karma_rankings') }}">
+                <button class="event" data-name="p-3">
+                    <img src="https://i.postimg.cc/NMWFNhRG/exclamation.png" alt="">
+                    <h3>Top Ranking Students</h3>
+                </button>
+            </a>
          </div>
     </div>
     <div class="review-title">

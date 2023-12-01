@@ -63,26 +63,24 @@ def search_students(search_term):
     return jsonify({"message": "You are not authorized to perform this action"}), 401
 
 @staff_views.route('/rankings', methods=['GET'])
-@jwt_required()
+@login_required
 def get_karma_rankings():
-  if jwt_current_user or isinstance(jwt_current_user, Staff):
-    rankings = get_student_rankings(jwt_current_user) 
-    if rankings:
-      return jsonify(rankings), 200
-    else:
-      return jsonify({"message": "No rankings found"}), 204
-  else:
-    return jsonify({"message": "You are not authorized to perform this action"}), 401 
+  if not isinstance(current_user, Staff):
+    return "Unauthorized", 401
+  
+  rankings = get_student_rankings(current_user)
+  return render_template('topranking.html', rankings=rankings)
   
 
 @staff_views.route('/new_review', methods=['POST', 'GET'])
 @login_required
 def newReview():
+
+  if not isinstance(current_user, Staff):
+    return "Unauthorized", 401
+  
   if request.method == 'POST':
 
-    if not isinstance(current_user, Staff):
-      return "Unauthorized", 401
-    
     staff_id = current_user.get_id()
     student_id = request.form['studentID']
 
@@ -101,13 +99,6 @@ def newReview():
 
     review = create_review(staff_id, student_id, is_positive, description)
     return redirect(f"/review_details/{review.ID}")
-    # return render_template('reviewdetails.html')
-    
-    # staff = get_staff(staff_ID)
-    # flash('Invalid staff ID. Please enter a valid staff ID.', 'error')
-    # return redirect(url_for('your_form_route'))
-      
-    # return "Review submitted successfully"  # Replace with the appropriate response
     
   return render_template('createreview.html')
   

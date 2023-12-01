@@ -40,17 +40,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for review in reviews %}
+                            {% for student in rankings %}
                                 <tr>
-                                    <td>
-                                        <p>
-                                            <span style="cursor: pointer;" onclick="handleClick()">
-                                                {{ review.reviewer.firstname }} {{ review.reviewer.lastname }}
-                                            </span>
-                                        </p>
-                                    </td>
-                                    <td>{{ review.studentID }}</td>
-                                    <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                    <td>{{loop.index}}</td>
+                                    <td>{{ student.studentID }}</td>
+                                    <td>{{ student.karmaScore }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
