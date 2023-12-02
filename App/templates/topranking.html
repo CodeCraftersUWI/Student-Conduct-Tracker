@@ -49,6 +49,15 @@
         </div>
         <div class="user-reviews">
             <main class="table">
+                <section class="table__header">
+                    <div class="input-group">
+                        <input type="search" placeholder="Search student ID...">
+                        <input type="search" placeholder="Search Date...">
+                        <button class="img">
+                            <i class='bx bx-search'></i>
+                        </button>
+                    </div>
+                </section>
                 <section class="table__body">
                     <table>
                         <thead>
@@ -56,6 +65,7 @@
                                 <th> Ranking <span class="icon-arrow"></span></th>
                                 <th> Student ID <span class="icon-arrow"></span></th>
                                 <th> Karma Score <span class="icon-arrow"></span></th>
+                                <th> Date <span class="icon-arrow"></span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,6 +74,7 @@
                                     <td>{{loop.index}}</td>
                                     <td style="cursor: pointer;" onclick="handleStudentIdClick('{{ student.studentID }}')">{{ student.studentID }}</td>
                                     <td>{{ student.karmaScore }}</td>
+                                    <td>11/02/2022</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

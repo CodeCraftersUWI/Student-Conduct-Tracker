@@ -283,6 +283,7 @@ thead th {
   background-color: #d5d1defe;
   cursor: pointer;
   text-transform: capitalize;
+  text-align: center;
 }
 
 tbody tr:nth-child(even) {
@@ -307,6 +308,10 @@ tbody tr td,
 tbody tr td p,
 tbody tr td img {
   transition: 0.2s ease-in-out;
+}
+
+tbody tr td{
+  text-align: center;
 }
 
 tbody tr.hide td,
