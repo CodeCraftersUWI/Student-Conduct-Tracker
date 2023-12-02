@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    background: white;
+  }
+  
+  .header {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 12.5%;
+    background: #e4e4e4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .right-side {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .right-side li {
+    margin-right: 15px; /* Adjust as needed for spacing between items */
+  }
+  
+  .left-side {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .left-side li {
+    margin-right: auto; /* Push the "Logout" link to the left */
+  }
+  
+  .navbar a {
+    position: relative;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    margin-right: 30px;
+  }
+  
+  .navbar a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 2px;
+    background: black;
+    border: 2px;
+    border-radius: 5px;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: 0.5s;
+  }
+  
+  .navbar a:hover::after {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .container {
+    padding-top: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+    height: 100%;
+    padding-bottom: 30px;
+  }
+  
+  .title{
+      color: #030303;
+    font-size: 36px;
+    font-family: "Poppins";
+    font-weight: 700;
+    line-height: 48px;
+  }
+  
+  .lecturer h4{
+      padding-left: 10px;
+  }
+  
+  .account-container {
+    display: flex;
+    padding-top: 50px;
+  }
+  
+  .account-container img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .account-text{
+      padding-top: 10px;
+  }
+  
+  .account-text h3 {
+    padding-right: 3px;
+  }
+  
+  .account-review-count {
+    display: flex;
+  
+  }
+  
+  .account-review-count h4{
+      padding-top: 15px;
+      padding-right: 3px;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: end;
+  }
+  
+  .button button {
+    cursor: pointer;
+    top: 1025px;
+    left: 115px;
+    width: 188px;
+    height: 48px;
+    padding: 0px 8px;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #286dbf;
+    color: #e4e4e4;
+    font-size: 16px;
+    font-family: "Poppins";
+    font-weight: 500;
+    line-height: 20px;
+    outline: none;
+  }
+  
+  .divider-horizontal {
+      position: absolute;
+      top: 520px;
+      left: 116px;
+      width: 1144px;
+      height: 1px;
+      background-color: #e4e4e4;
+      border-radius: 2px;
+    }
