@@ -136,7 +136,7 @@ body {
   font-size: 18px;
 }
 
-.search_wrap .search_box .btn {
+.search_wrap .search_box .btn button {
   position: absolute;
   top: 0;
   right: 0;
@@ -303,10 +303,15 @@ thead th {
   background-color: #d5d1defe;
   cursor: pointer;
   text-transform: capitalize;
+  text-align: center;
 }
 
 tbody tr:nth-child(even) {
   background-color: #0000000b;
+}
+
+tbody tr td{
+  text-align: center;
 }
 
 tbody tr {

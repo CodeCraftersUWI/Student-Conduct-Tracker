@@ -11,13 +11,13 @@
 <body>
     <header class="header">
         <nav class="navbar">
-            <a href="#">Review</a>
-            <a href="#">Account</a>
+            <!-- <a href="#">Review</a> -->
+            <!-- <a href="#">Account</a> -->
         </nav>
 
         <form action="/login" method = "post" class="search-bar">
-            <input type="email" placeholder="Search...">
-            <button type="submit"><i class='bx bx-search'></i></button>
+            <!-- <input type="email" placeholder="Search..."> -->
+            <!-- <button type="submit"><i class='bx bx-search'></i></button> -->
         </form>
     </header>
     
@@ -38,8 +38,8 @@
                     <div class="flash-messages">
                         {% with messages = get_flashed_messages() %}
                             {% if messages %}
-                                <!-- <ul> <li>{{ messages[0] }}</li></ul> -->
-                                <script>alert("{{ messages[0] }}"); </script>
+                                <ul> <li>{{ messages[0] }}</li></ul>
+                                <!-- <script>alert("{{ messages[0] }}"); </script> -->
                             {% endif %}
                         {% endwith %}
                     </div>

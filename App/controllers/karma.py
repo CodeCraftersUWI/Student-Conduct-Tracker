@@ -14,7 +14,7 @@ def get_latest_karma_score(student_id):
         .first()
 
     if student_karma:
-        return student_karma[1].score
+        return student_karma
 
     return None
 

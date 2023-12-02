@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="../static/studentReviewsStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='studentReviewsStyle.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="{{ url_for('review_views.get_reviews_from_staff') }}">Account</a></li>
+                <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
+            </ul>
+            <ul class="left-side">
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <div class="container">
+        <div class="account-container">
+            <img src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                alt="Profile">
+            <div class="student-info">
+                <h3>{{student.firstname}} {{student.lastname}}</h3>
+                <div class="student-details">
+                    <h4>Student ID: </h4>
+                    <h4>{{student.ID}}</h4>
+                </div>
+                <div class="rank-details">
+                    <h4>Karma Rank: </h4>
+                    {% if karma is not none %}
+                        <h4>{{ karma.rank }}</h4>
+                    {% else %}
+                        <h4> N/A </h4>
+                    {% endif %}
+                </div>
+                <div class="karma-score">
+                    <h4>Karma Score: </h4>
+                    {% if karma is not none %}
+                        <h4>{{ karma.score }}</h4>
+                    {% else %}
+                        <h4> N/A </h4>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="user-reviews">
+            <main class="table">
+                <section class="table__body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> Type of Review <span class="icon-arrow"></span></th>
+                                <th> Created by<span class="icon-arrow"></span></th>
+                                <th> Created on <span class="icon-arrow"></span></th>
+                                <th> Up votes <span class="icon-arrow"></span></th>
+                                <th> Down votes <span class="icon-arrow"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for review in reviews %}
+                            <tr>
+                                <td>
+                                    {% if review.isPositive %}
+                                    <p class="status delivered">Positive</p>
+                                    {% else %}
+                                    <p class="status cancelled">Negative</p>
+                                    {% endif %}
+                                </td>
+                                <td>{{ review.reviewer.firstname }} {{review.reviewer.lastname}}</td>
+                                <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                <td>{{review.upvotes}}</td>
+                                <td>{{review.downvotes}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+
+    </div>
+</body>
+
+</html>

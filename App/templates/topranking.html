@@ -15,14 +15,33 @@
     <header class="header">
         <nav class="navbar">
             <ul class="right-side">
-                <li><a href="#">Review</a></li>
-                <li><a href="#">Account</a></li>
+                <li><a href="{{ url_for('review_views.get_reviews_from_staff') }}">Account</a></li>
                 <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
             </ul>
             <ul class="left-side">
                 <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
             </ul>
         </nav>
+        <script>
+            function handleStudentIdClick(studentID) 
+            {
+                fetch(`/student/${studentID}/reviews`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Server responded with an error');
+                    }
+                    window.location.href = `/student/${studentID}/reviews`;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            }
+        </script>
     </header>
     <div class="container">
         <div class="account-container">
@@ -30,6 +49,15 @@
         </div>
         <div class="user-reviews">
             <main class="table">
+                <section class="table__header">
+                    <div class="input-group">
+                        <input type="search" placeholder="Search student ID...">
+                        <input type="search" placeholder="Search Date...">
+                        <button class="img">
+                            <i class='bx bx-search'></i>
+                        </button>
+                    </div>
+                </section>
                 <section class="table__body">
                     <table>
                         <thead>
@@ -37,20 +65,16 @@
                                 <th> Ranking <span class="icon-arrow"></span></th>
                                 <th> Student ID <span class="icon-arrow"></span></th>
                                 <th> Karma Score <span class="icon-arrow"></span></th>
+                                <th> Date <span class="icon-arrow"></span></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for review in reviews %}
+                            {% for student in rankings %}
                                 <tr>
-                                    <td>
-                                        <p>
-                                            <span style="cursor: pointer;" onclick="handleClick()">
-                                                {{ review.reviewer.firstname }} {{ review.reviewer.lastname }}
-                                            </span>
-                                        </p>
-                                    </td>
-                                    <td>{{ review.studentID }}</td>
-                                    <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                    <td>{{loop.index}}</td>
+                                    <td style="cursor: pointer;" onclick="handleStudentIdClick('{{ student.studentID }}')">{{ student.studentID }}</td>
+                                    <td>{{ student.karmaScore }}</td>
+                                    <td>11/02/2022</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

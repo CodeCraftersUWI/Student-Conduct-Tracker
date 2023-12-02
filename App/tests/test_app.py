@@ -45,8 +45,8 @@ class UserUnitTests(unittest.TestCase):
         assert newStaff.firstname == "Bob" and newStaff.lastname == "Charles" and newStaff.check_password("bobpass") and newStaff.ID == "342" and newStaff.email == "bob.charles@staff.com" and newStaff.teachingExperience == "10"
 
     def test_new_student (self):
-        newStudent = Student( "813", "Joe", "Dune", "0000-653-4343", "Full-Time", "2")
-        assert newStudent.ID == "813" and newStudent.firstname == "Joe" and newStudent.lastname == "Dune" and newStudent.contact == "0000-653-4343" and newStudent.studentType == "Full-Time" and newStudent.yearOfStudy == "2"
+        newStudent = Student( "813", "Joe", "Dune", "Full-Time", "2")
+        assert newStudent.ID == "813" and newStudent.firstname == "Joe" and newStudent.lastname == "Dune"  and newStudent.studentType == "Full-Time" and newStudent.yearOfStudy == "2"
 
     def test_set_password(self): 
         newAdmin = Admin("Bob", "Boblast",  "bobpass")
@@ -105,12 +105,11 @@ class UsersIntegrationTests(unittest.TestCase):
     
     def test_create_student(self):
         newAdmin = create_user("rick", "rolast", "bobpass")
-        newStudent = create_student(newAdmin, "813", "Joe", "Dune", "0000-653-4343", "Full-Time", "2")
+        newStudent = create_student(newAdmin, "813", "Joe", "Dune", "Full-Time", "2")
         assert newAdmin.firstname == "rick" and newAdmin.lastname == "rolast" and newAdmin.check_password("bobpass")
         assert newStudent.ID == "813" 
         assert newStudent.firstname == "Joe" 
         assert newStudent.lastname == "Dune"
-        assert newStudent.contact == "0000-653-4343" 
         assert newStudent.studentType == "Full-Time" 
         assert newStudent.yearOfStudy == 2
 
@@ -140,21 +139,19 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_update_student(self): 
         student = get_student("813") 
         oldFirstname = student.firstname
-        oldLastname = student.lastname 
-        oldContact = student.contact 
+        oldLastname = student.lastname
         oldStudentType = student.studentType
         oldYearOfStudy = student.yearOfStudy
-        update_student(student, "Joey", "Dome", "0000-123-4567", "Part-Time", "5")
+        update_student(student, "Joey", "Dome", "Part-Time", "5")
         assert student.firstname != oldFirstname and student.firstname == "Joey"
         assert student.lastname != oldLastname and student.lastname == "Dome"
-        assert student.contact != oldContact and student.contact == "0000-123-4567"
         assert student.studentType != oldStudentType and student.studentType == "Part-Time"
         assert student.yearOfStudy != oldYearOfStudy and student.yearOfStudy == 5
 
     def test_create_review(self): 
         admin = create_user("rev", "revlast", "revpass")
         staff = create_staff(admin, "Jon", "Den", "password", "546", "john@example.com", 5)
-        student = create_student(admin, "2", "Jim", "Lee", "jim@school.com", "Full-time", 1)
+        student = create_student(admin, "2", "Jim", "Lee", "Full-time", 1)
         review = create_review(staff.ID, student.ID, True, "This is a great review")
         assert admin and staff and student
         assert review.reviewerID == staff.ID
@@ -165,7 +162,7 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_edit_review(self): 
         admin = create_user("grey", "graylast", "graypass")
         staff = create_staff(admin, "Ben", "Gen", "password", "756", "ben@example.com", 7)
-        student = create_student(admin, "456", "Kim", "Qee", "kim@school.com", "Part-time", 4)
+        student = create_student(admin, "456", "Kim", "Qee", "Part-time", 4)
         review = create_review(staff.ID, student.ID, True, "This is a great review")
         oldReviewIsPositive = review.isPositive
         oldReviewComment = review.comment
@@ -177,7 +174,7 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_delete_review(self): 
         admin = create_user("Green", "greenlast", "greenpass")
         staff = create_staff(admin, "Pem", "Ven", "password", "777", "pem@example.com", 6)
-        student = create_student(admin, "666", "Cem", "Sem", "cem@school.com", "Part-time", 4)
+        student = create_student(admin, "666", "Cem", "Sem", "Part-time", 4)
         review = create_review(staff.ID, student.ID, True, "Soon to be deleted")
         assert admin and staff and student and review 
         delete_review(review, staff)
@@ -186,7 +183,7 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_get_reviews_for_student(self): 
         admin = create_user("Red", "redlast", "redpass")
         staff = create_staff(admin, "Xem", "Zenm", "password", "111", "zenm@example.com", 6)
-        student = create_student(admin, "222", "Demn", "Sam", "demn@school.com", "Evening", 2)
+        student = create_student(admin, "222", "Demn", "Sam", "Evening", 2)
         assert admin and staff and student
         assert create_review(staff.ID, student.ID, True, "What a good student")
         assert create_review(staff.ID,  student.ID, True, "He answers all my questions in class")
@@ -197,7 +194,7 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_get_reviews_by_staff(self): 
         admin = create_user("Blue", "bluelast", "bluepass")
         staff = create_staff(admin, "Forg", "Qu", "password", "3333", "qu@example.com", 4)
-        student = create_student(admin, "1111", "Ano", "One", "sigh@school.com", "Full-Time", 6)
+        student = create_student(admin, "1111", "Ano", "One", "Full-Time", 6)
         assert admin and staff and student
         assert create_review(staff.ID, student.ID, False, "What a bad student")
         assert create_review(staff.ID,  student.ID, False, "He always talk during class")
@@ -209,7 +206,7 @@ class UsersIntegrationTests(unittest.TestCase):
         admin = create_user("White", "whitelast", "whitepass")
         staff_1 = create_staff(admin, "Geo", "Twin1", "password", "5555", "twin1@example.com", 8)
         staff_2 = create_staff(admin, "Geo", "Twin2", "password", "4444", "twin2@example.com", 8)
-        student = create_student(admin, "9999", "Kil", "Me", "void@school.com", "Full-Time", 4)
+        student = create_student(admin, "9999", "Kil", "Me", "Full-Time", 4)
         review = create_review(staff_1.ID, student.ID, True, "Do i even need to review this student")
         assert admin and staff_1 and staff_2 and student and review
         old_upVotes = review.upvotes
@@ -227,7 +224,7 @@ class UsersIntegrationTests(unittest.TestCase):
         assert admin
 
         for student in range (2011, 2021): 
-            assert create_student(admin, student, "Fname" + str(student), "Lname" + str(student), "0000-123-4567", "Full-Time", 2)
+            assert create_student(admin, student, "Fname" + str(student), "Lname" + str(student), "Full-Time", 2)
 
         for staff in range (2000, 2010):
             assert create_staff(admin, "Fname" + str(staff), "Lname" + str(staff), "password2", staff, str(staff) + "email@example.com", 5)

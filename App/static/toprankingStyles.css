@@ -139,17 +139,66 @@
     top: 505px;
     left: -5px;
     width: 100%;
-    height: 354px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
+    height: 700px;
+    margin-top: 400px;
     background-color: white;
-  
     backdrop-filter: blur(7px);
     box-shadow: 0 0.4rem 0.8rem #0005;
   
     overflow: hidden;
+  }
+
+  .table__header {
+    width: 100%;
+    height: 90px;
+    background-color: #fff4;
+    padding: 0.8rem 1rem;
+  
+    display: flex;
+    justify-content: end;
+
+    align-items: center;
+  }
+  
+  .table__header .input-group {
+    width: 35%;
+    height: 100%;
+    background-color: #fff5;
+    padding: 0 0.8rem;
+    border-radius: 2rem;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    transition: 0.2s;
+  }
+  
+  .table__header .input-group:hover {
+    width: 45%;
+    background-color: #fff8;
+    box-shadow: 0 0.1rem 0.4rem #0002;
+  }
+  
+  .table__header .input-group button {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background-color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .table__header .input-group button:hover {
+    background-color: #ccc; 
+    border-radius: 5px;
+  }
+  
+  .table__header .input-group input {
+    width: 100%;
+    padding: 0 0.5rem 0 0.3rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
   }
   
   .table__body {
@@ -206,6 +255,7 @@
     background-color: #d5d1defe;
     cursor: pointer;
     text-transform: capitalize;
+    text-align: center;
   }
   
   tbody tr:nth-child(even) {
@@ -230,6 +280,10 @@
   tbody tr td p,
   tbody tr td img {
     transition: 0.2s ease-in-out;
+  }
+
+  tbody tr td{
+    text-align: center;
   }
   
   tbody tr.hide td,

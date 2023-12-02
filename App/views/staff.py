@@ -1,10 +1,10 @@
 import random
 import string
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
 from App.controllers import Student, Staff
 from App.controllers.user import get_staff, get_student
 from App.database import db
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask_jwt_extended import current_user as jwt_current_user
 from flask_jwt_extended import jwt_required
 
@@ -63,23 +63,44 @@ def search_students(search_term):
     return jsonify({"message": "You are not authorized to perform this action"}), 401
 
 @staff_views.route('/rankings', methods=['GET'])
-@jwt_required()
+@login_required
 def get_karma_rankings():
-  if jwt_current_user or isinstance(jwt_current_user, Staff):
-    rankings = get_student_rankings(jwt_current_user) 
-    if rankings:
-      return jsonify(rankings), 200
-    else:
-      return jsonify({"message": "No rankings found"}), 204
-  else:
-    return jsonify({"message": "You are not authorized to perform this action"}), 401 
+  if not isinstance(current_user, Staff):
+    return "Unauthorized", 401
+  
+  rankings = get_student_rankings(current_user)
+  return render_template('topranking.html', rankings=rankings)
   
 
 @staff_views.route('/new_review', methods=['POST', 'GET'])
-# @jwt_required()
 @login_required
 def newReview():
-   return render_template('createreview.html')
+
+  if not isinstance(current_user, Staff):
+    return "Unauthorized", 401
+  
+  if request.method == 'POST':
+
+    staff_id = current_user.get_id()
+    student_id = request.form['studentID']
+
+    student = get_student(student_id)
+    if not student:
+      flash("Student ID not found")
+      return redirect('/new_review')
+    
+
+    review_type = request.form['reviewType']
+    description = request.form['description']
+    if review_type == "Positive":
+      is_positive = True
+    else:
+      is_positive = False
+
+    review = create_review(staff_id, student_id, is_positive, description)
+    return redirect(f"/review_details/{review.ID}")
+    
+  return render_template('createreview.html')
   
   
   

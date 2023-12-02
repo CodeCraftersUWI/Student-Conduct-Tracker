@@ -92,13 +92,13 @@ def updateKarma(review):
     student = db.session.query(Student).get(review.studentID)
 
     # Check if the student has a Karma record (karmaID) and create a new Karma record for them if not
-    if student.karmaID is None:
-        karma = Karma(score=0.0, rank=-99)
-        db.session.add(karma)  # Add the Karma record to the session
-        db.session.flush()  # Ensure the Karma record gets an ID
-        db.session.commit()
-        # Set the student's karmaID to the new Karma record's ID
-        student.karmaID = karma.karmaID
+    # if student.karmaID is None:
+    karma = Karma(student.ID, score=0.0, rank=-99)
+    db.session.add(karma)  # Add the Karma record to the session
+    db.session.flush()  # Ensure the Karma record gets an ID
+    db.session.commit()
+    # Set the student's karmaID to the new Karma record's ID
+    student.karmaID = karma.karmaID
 
     # Update Karma for the student
     student_karma = db.session.query(Karma).get(student.karmaID)
@@ -106,4 +106,4 @@ def updateKarma(review):
     student_karma.updateRank()
 
 def get_latest_reviews():
-    return Review.query.order_by(desc(Review.created)).limit(5).all()
+    return Review.query.order_by(desc(Review.created)).limit(10).all()

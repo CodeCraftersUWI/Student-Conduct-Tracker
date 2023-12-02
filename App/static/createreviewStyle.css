@@ -136,7 +136,12 @@ input {
   display: flex;
 }
 
-#description {
+.description-container {
+  position: relative;
+  margin-top: 20px;
+}
+
+.wrapper textarea {
   top: 690px;
   left: 116px;
   width: 734px;
@@ -151,6 +156,13 @@ input {
   font-family: "Poppins";
   line-height: 20px;
   outline: none;
+}
+
+@media (max-width: 400px) {
+  #description {
+    width: 734px;
+    top: 670px; /* Adjust the positioning as needed */
+  }
 }
 
 #button button {
@@ -173,11 +185,22 @@ input {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 150px;
+  padding-left: 250px;
+  width: 688px;
+  height: 976px;
+  /* width: ; */
+  /* padding-top: 150px;
+  padding-left: 250px; */
   color: #030303;
   font-size: 32px;
   font-family: "Roboto";
   font-weight: 700;
   line-height: 42px;
+
 }
 
 .form {
@@ -185,7 +208,8 @@ input {
   height: 100%;
 }
 
-#lecturerName {
+#staffID {
+  
   top: 339px;
   left: 115px;
   width: 354px;
@@ -203,6 +227,7 @@ input {
 }
 
 #studentID {
+  display: flex;
   top: 339px;
   left: 496px;
   width: 354px;
@@ -219,6 +244,14 @@ input {
   outline: none;
 }
 
+.student-dropdown{
+  display: flex;
+}
+
+.review-type-container{
+  padding-top: 30px;
+}
+
 .description-text {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -229,12 +262,12 @@ input {
 }
 
 .container-dropdown {
-  width: 100%;
-  height: 100px;
+  width: 734px;
+  height: 150px;
 }
 
 .dropdown {
-  min-width: 15em;
+  min-width: 100px;
   position: relative;
 }
 
@@ -307,8 +340,8 @@ input {
   position: absolute;
   top: 3em;
   left: 50%;
-  width: 100%;
-  transform: translateX(-50%);
+  width: 45%;
+  transform: translateX(-110%);
   opacity: 0;
   display: none;
   transition: 0.2s;
