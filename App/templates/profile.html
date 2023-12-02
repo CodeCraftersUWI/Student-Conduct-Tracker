@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="../static/profileStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profileStyle.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="#">Account</a></li>
+                <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
+            </ul>
+            <ul class="left-side">
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <div class="container">
+        <div class="title">
+            <h1>Staff Reviews</h1>
+        </div>
+        <div class="account-container">
+            <img src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+                alt="Profile">
+            <div class="account-text">
+                <h3>John Doe</h3>
+                <div class="account-review-count">
+                    <h4>50</h4>
+                    <h4>Reviews</h4>
+                    <div class="lecturer">
+                        <h4>Lecturer</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div>
+        <div class="staff-reviews">
+            <main class="table">
+                <section class="table__body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> Review ID <span class="icon-arrow"></span></th>
+                                <th> Student ID <span class="icon-arrow"></span></th>
+                                <th> Created on <span class="icon-arrow"></span></th>
+                                <th> Type of Review <span class="icon-arrow"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for review in reviews %}
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <span style="cursor: pointer;" onclick="handleClick()">
+                                            1
+                                            </span>
+                                        </p>
+                                    </td>
+                                    <td>{{ review.studentID }}</td>
+                                    <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        {% if review.isPositive %}
+                                            <p class="status delivered">Positive</p>
+                                        {% else %}
+                                            <p class="status cancelled">Negative</p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+       </div>
+    </div>
+</body>
+
+</html>
