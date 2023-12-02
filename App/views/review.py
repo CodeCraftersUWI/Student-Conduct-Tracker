@@ -33,7 +33,6 @@ def view_review(review_id):
         addVote(review_id, current_user, vote_type)
         updated_review = get_review(review_id)
         return jsonify({'upvotes': updated_review.upvotes, 'downvotes': updated_review.downvotes})
-        # return redirect(url_for('review_views.view_review', review_id=review_id))
 
     review = get_review(review_id)
     if review:
@@ -56,15 +55,15 @@ def get_reviews_of_student(student_id):
     return redirect('/home')
 
 # Route to get reviews by staff ID
-@review_views.route("/staff/<string:staff_id>/reviews", methods=["GET"])
-def get_reviews_from_staff(staff_id):
-    if get_staff(str(staff_id)):
-        reviews = get_reviews_by_staff(staff_id)
-        if reviews:
-            return jsonify([review.to_json() for review in reviews]), 200
-        else:
-            return "No reviews found by the staff member", 404
-    return "Staff does not exist", 404
+@review_views.route("/staff/YourReviews", methods=["GET"])
+@login_required
+def get_reviews_from_staff():
+    if not isinstance(current_user, Staff):
+      return "Unauthorized", 401
+    
+    if get_staff(current_user.ID):
+        reviews = get_reviews_by_staff(current_user.ID)
+        return render_template('profile.html', reviews = reviews, staff = get_staff(current_user.ID), numReviews = len(reviews))
 
 # # Route to edit a review
 # @review_views.route("/reviews/edit/<int:review_id>", methods=["PUT"])
