@@ -6,7 +6,7 @@ import random
 import randomname
 from App.database import db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_user, create_staff, create_review, create_student, get_all_users_json, get_all_users, addVote, get_staff )
+from App.controllers import ( create_user, create_staff, create_review, create_student, get_all_users_json, get_all_users, addVote, get_staff, add_vote_record )
 from App.views import (generate_random_contact_number)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -44,6 +44,19 @@ def initialize():
       db.session.add(student)
       db.session.commit()
 
+  staff= create_staff(admin, 
+          "stafftester", 
+          randomname.get_name(), 
+          "bobpass", 
+          str(ID), 
+          randomname.get_name() + '@schooling.com', 
+          str(random.randint(1, 15))
+    )
+  db.session.add(staff)
+  db.session.commit()
+  review = create_review(2, 50, True, "Testing")
+  vote_record = addVote(1, staff, "upvote")
+
   return jsonify({'message': 'Database initialized'}),201
 
 '''
@@ -79,6 +92,28 @@ def createReview():
     # create_review(2, 51, True, "Good Job")
     staff = get_staff(2)
     addVote(1, staff, "downvote")
+
+
+@user_cli.command("testing", help="Create a review")
+def test():
+    db.drop_all()
+    db.create_all()
+
+    admin= create_user('bob', 'boblast' , 'bobpass')
+    staff = create_staff(admin, "Jerrelle", "Johnson", "2", "2", "jerrelle9@icloud.com", 4)
+
+    for ID in range(816029801, 816029811): 
+        contact= generate_random_contact_number()
+        student= create_student(admin, str(ID),
+            randomname.get_name(), 
+            randomname.get_name(),
+            contact,
+            random.choice(['Full-Time','Part-Time', 'Evening']),
+            str(random.randint(1, 8))
+        )
+        create_review(staff.ID, ID, random.choice([True, False]), "reviewing...") 
+        db.session.add(student)
+        db.session.commit()
     
 
 app.cli.add_command(user_cli) # add the group to the cli

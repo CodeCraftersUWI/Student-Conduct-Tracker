@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWI Student Conduct Tracker</title>
+    <link rel="stylesheet" href="../static/homestyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homestyle.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script>
+        function handleStudentIdClick(studentID) {
+            fetch(`/student/${studentID}/reviews`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server responded with an error');
+                }
+                window.location.href = `/student/${studentID}/reviews`;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+
+        function handleIdClick(reviewID) {
+            fetch(`/review_details/${reviewID} `, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/review_details/${reviewID}`;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+
+        function searchStudent() {
+            var studentId = document.getElementById('studentIdInput').value;
+            console
+            handleStudentIdClick(studentId)
+        }
+    </script>
+</head>
+<body>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <!-- <ul> <li>{{ messages[0] }}</li></ul> -->
+                <script>alert("{{ messages[0] }}"); </script>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <header class="header">
+        <nav class="navbar">
+            <ul class="right-side">
+                <li><a href="{{ url_for('review_views.get_reviews_from_staff') }}">Account</a></li>
+                <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
+            </ul>
+            <ul class="left-side">
+                <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+            </ul>
+
+        </nav>
+    </header>
+    <div class="image_container">
+        <div class="title-text">
+                <h1>Student Conduct Tracker</h1>
+            </div>
+        <div class="container">
+            <div class="search_wrap search_wrap_1">
+                <div class="search_box">
+                    <input type="text" class="input" id= "studentIdInput" placeholder="Enter Student ID...">
+                    <div class="btn btn_common">
+                        <button onclick="searchStudent()"><i class='bx bx-search'></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="second-section">
+        <div class="event-container">
+
+            <a href="{{ url_for('review_views.get_reviews_from_staff') }}">
+                <button class="event" data-name="p-1">
+                    <img src="https://i.postimg.cc/9Mz7W33n/like.png" alt="">
+                    <h3>View My Reviews</h3>
+                </button>
+            </a>
+      
+            <a href = "{{ url_for('staff_views.newReview') }}">
+                <button class="event" data-name="p-2">
+                    <img src="https://i.postimg.cc/tgph56pv/gavel.png" alt="">
+                    <h3>Create A Review</h3>
+                </button>
+            </a>
+            
+            <a href = "{{ url_for('staff_views.get_karma_rankings') }}">
+                <button class="event" data-name="p-3">
+                    <img src="https://i.postimg.cc/NMWFNhRG/exclamation.png" alt="">
+                    <h3>Top Ranking Students</h3>
+                </button>
+            </a>
+         </div>
+    </div>
+    <div class="review-title">
+        <h1>Recent Reviews</h1>
+    </div>
+    <div class="recent-review">
+        <main class="table">
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Review ID <span class="icon-arrow"></span></th>
+                            <th> Created by <span class="icon-arrow"></span></th>
+                            <th> Student ID <span class="icon-arrow"></span></th>
+                            <th> Created on <span class="icon-arrow"></span></th>
+                            <th> Type of Review <span class="icon-arrow"></span></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for review in reviews %}
+                            <tr >
+                                <td style="cursor: pointer;" onclick="handleIdClick('{{ review.ID }}')" >{{review.ID}}</td>
+                                <td>
+                                    <p>
+                                        <span >
+                                            {{ review.reviewer.firstname }} {{ review.reviewer.lastname }}
+                                        </span>
+                                    </p>
+                                </td>
+                                <td style="cursor: pointer;" onclick="handleStudentIdClick('{{ review.studentID }}')">{{ review.studentID }}</td>
+                                <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                <!-- <td>{{ review.created}}</td> -->
+                                <td>
+                                    {% if review.isPositive %}
+                                        <p class="status delivered">Positive</p>
+                                    {% else %}
+                                        <p class="status cancelled">Negative</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

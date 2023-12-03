@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='createreviewStyle.css') }}">
+  <link rel="stylesheet" href="../static/createreviewStyle.css">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="../static/createreviewStyle.css"> -->
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Review</title>
+
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar">
+      <ul class="right-side">
+        <li><a href="{{ url_for('review_views.get_reviews_from_staff') }}">Account</a></li>
+        <li><a href="{{ url_for('index_views.home') }}">Home</a></li>
+      </ul>
+
+      <ul class="left-side">
+        <li><a href="{{ url_for('auth_views.logout_action') }}">Logout</a></li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <div class="container" id="content">
+    <h1>Create Review</h1>
+
+    <form class="form" action="{{ url_for('staff_views.newReview') }}" method="post">
+      <div class="student-dropdown">
+        <div id="name_ID">
+          <div class="form-group">
+            <label class="text" for="studentID">Student ID:</label>
+            <input required type="text" id="studentID" name="studentID" placeholder="Enter the Student ID">
+          </div>
+        </div>
+        <div class="review-type-container">
+          <div>
+            <label class="text" for="TypeofReview">Type of Review</label>
+          </div>
+          <div class="container-dropdown">
+            <div class="container-dropdown">
+              <div class="dropdown">
+                <div class="select" onclick="toggleDropdown()">
+                  <span class="selected">Positive</span>
+                  <div class="caret"></div>
+                </div>
+                <ul class="menu" required id="dropdownMenu">
+                  <li onclick="selectOption('Negative')">Negative</li>
+                  <li onclick="selectOption('Positive')">Positive</li>
+                  <input type="hidden" id="reviewType" name="reviewType" value="Positive">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="description-container">
+        <div class="description-text">
+          <label class="text" for="description">Description</label>
+        </div>
+        <div class="wrapper">
+          <textarea spellcheck="false" name="description" placeholder="Type something here..." required></textarea>
+        </div>
+        <!-- <input required type="text" id="description" name="description" placeholder="Enter review"
+          style="background-color: #a9a5a5;"> -->
+      </div>
+
+      <div id="button">
+        <button type="submit">New Review</button>
+      </div>
+      <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <!-- <ul> <li>{{ messages[0] }}</li></ul> -->
+        <script>alert("{{ messages[0] }}"); </script>
+        {% endif %}
+        {% endwith %}
+      </div>
+    </form>
+
+  </div>
+  <script>
+    function toggleDropdown() {
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      dropdownMenu.classList.toggle('menu-open');
+    }
+
+    function selectOption(option) {
+      const selectedText = document.querySelector('.selected');
+      selectedText.textContent = option;
+      const reviewTypeInput = document.getElementById('reviewType');
+      reviewTypeInput.value = option;
+      toggleDropdown();
+    }
+  </script>
+</body>
+
+</html>

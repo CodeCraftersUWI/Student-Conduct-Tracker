@@ -1,8 +1,40 @@
 from App.models import Karma, Student
 from App.database import db
+from datetime import datetime
 
 def get_karma_by_id(karma_id):
     return db.session.query(Karma).get(karma_id)
+
+def get_latest_karma_score(student_id):
+    # Query the student and associated karma record
+    student_karma = db.session.query(Student, Karma)\
+        .join(Karma, Student.karmaID == Karma.karmaID)\
+        .filter(Student.ID == student_id)\
+        .order_by(db.desc(Karma.lastUpdated))\
+        .first()
+
+    if student_karma:
+        return student_karma
+
+    return None
+
+def get_karma_score_by_date(student_id, date):
+    # Convert the input date string to a datetime object
+    target_date = datetime.strptime(date, "%Y-%m-%d")
+
+    # Query the student and associated karma record
+    student_karma = db.session.query(Student, Karma)\
+        .join(Karma, Student.karmaID == Karma.karmaID)\
+        .filter(Student.ID == student_id)\
+        .filter(Karma.lastUpdated <= target_date)\
+        .order_by(db.desc(Karma.lastUpdated))\
+        .first()
+
+    if student_karma:
+        return student_karma[1].score
+
+    return None
+
 
 def calculate_student_karma(student):
     good_karma = 0

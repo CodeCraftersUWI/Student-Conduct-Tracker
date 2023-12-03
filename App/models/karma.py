@@ -1,16 +1,19 @@
 from App.database import db
 from .student import Student
-
+from datetime import datetime
 
 class Karma(db.Model):
   __tablename__ = "karma"
   karmaID = db.Column(db.Integer, primary_key=True)
   score = db.Column(db.Float, nullable=False, default=0.0)
   rank = db.Column(db.Integer, nullable=False, default=-99)
+  lastUpdated = db.Column(db.DateTime, default=datetime.utcnow)
+  studentID = db.Column(db.String(10), db.ForeignKey('student.ID'))
 
-  def __init__(self, score=0.0, rank=-99):
+  def __init__(self, studentID ,score=0.0, rank=-99, ):
     self.score = score
     self.rank = rank
+    self.studentID = studentID
 
   def to_json(self):
     return {"karmaID": self.karmaID, "score": self.score, "rank": self.rank}

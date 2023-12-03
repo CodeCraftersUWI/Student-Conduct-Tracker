@@ -1,50 +1,57 @@
 import random
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, get_flashed_messages
 from App.models import db
-from App.controllers import create_user, create_staff, create_student
+from App.controllers import create_user, create_staff, create_student,create_review, get_latest_reviews, get_reviews_by_staff, get_staff, addVote
+from flask_login import login_required, current_user
 import randomname
 
-from App.models.admin import Admin
+
+from App.models import Admin, Staff
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
-
-# Define a route for the index view
-@index_views.route('/', methods=['GET'])
-def index_page():
-    return render_template('index.html')
 
 def generate_random_contact_number():
     return f"0000-{random.randint(100, 999)}-{random.randint(1000, 9999)}"
 
+# Define a route for the index view
+@index_views.route('/', methods=['GET'])
+def index_page():
+    db.drop_all()
+    db.create_all()
 
-@index_views.route('/init', methods=['POST'])
-def init():
-  db.drop_all()
-  db.create_all()
-  admin= create_user('bob', 'boblast' , 'bobpass')
-  for ID in  range(2, 50): 
-    staff= create_staff(admin, 
-          randomname.get_name(), 
-          randomname.get_name(), 
-          randomname.get_name(), 
-          str(ID), 
-          randomname.get_name() + '@schooling.com', 
-          str(random.randint(1, 15))
-      )
-    db.session.add(staff)
-    db.session.commit()
+    admin= create_user('bob', 'boblast' , 'bobpass')
+    staff = create_staff(admin, "John", "Doe", "2", "2", "johndoe@icloud.com", 4)
+    
+    for student in range (2011, 2021): 
+        create_student(admin, student, randomname.get_name(), randomname.get_name(),"Full-Time", 2)
 
-  for ID in range(50, 150): 
-      contact= generate_random_contact_number()
-      student= create_student(admin, str(ID),
-          randomname.get_name(), 
-          randomname.get_name(), 
-          randomname.get_name(),
-          contact,
-          random.choice(['Full-Time','Part-Time', 'Evening']),
-          str(random.randint(1, 8))
-      )
-      db.session.add(student)
-      db.session.commit()
+    for staff in range (2000, 2010):
+        create_staff(admin, randomname.get_name(), randomname.get_name(), "password2", str(staff), "staff@example.com", 5)
+        create_review(staff, staff + 11, random.choice([True, False]), "reviewing...") 
 
-  return jsonify({'message': 'Database initialized'}),201
+
+    for staff in range(2000, 2010):
+        reviews = get_reviews_by_staff(staff)
+
+        if reviews:
+            for review in reviews: 
+                for voter in range(2000, 2010):
+                    if get_staff(voter).ID != review.reviewerID: 
+                        vote_type = random.choice(["upvote", "downvote"])  # Randomly select upvote/downvote
+                        addVote(review.ID, get_staff(voter), vote_type)
+                        
+    return render_template('welcome.html')
+    
+
+@index_views.route('/home', methods=['GET', 'POST'])
+@login_required
+def home():
+    if not isinstance(current_user, Staff):
+      return "Unauthorized", 401
+    
+    messages = get_flashed_messages()
+    reviews = get_latest_reviews()
+
+    if messages:
+        return render_template('home.html', reviews=reviews, messages=messages)
+    return render_template('home.html', reviews=reviews)

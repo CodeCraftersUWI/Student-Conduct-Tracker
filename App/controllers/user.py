@@ -2,11 +2,11 @@ from App.models import Staff, Student, Admin
 from App.database import db
 
 
-def create_student(admin, studentID, firstname, lastname, contact, studentType, yearofStudy):
-		new_student = admin.addStudent(studentID, firstname=firstname, lastname=lastname, contact=contact, studentType=studentType, yearofStudy=yearofStudy)
-		if new_student:
-			return new_student
-		return None
+def create_student(admin, studentID, firstname, lastname, studentType, yearofStudy):
+    new_student = admin.addStudent(studentID, firstname=firstname, lastname=lastname, studentType=studentType, yearofStudy=yearofStudy)
+    if new_student:
+        return new_student
+    return None
 
 
 def create_staff(admin, firstname, lastname, password, staffID, email, teachingExperience):
@@ -76,10 +76,9 @@ def get_all_staff():
     return db.session.query(Staff).all()
 
 
-def update_student(student, firstname, lastname, contact, studentType, yearofStudy):
+def update_student(student, firstname, lastname, studentType, yearofStudy):
     student.firstname = firstname 
     student.lastname = lastname
-    student.contact = contact
     student.studentType = studentType
     student.yearOfStudy = yearofStudy
     db.session.add(student)

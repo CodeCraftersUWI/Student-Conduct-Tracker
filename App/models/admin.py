@@ -14,8 +14,8 @@ class Admin(User):
 		return self.ID
 
 	#add student to the database
-	def addStudent(self, id, firstname, lastname, contact, studentType, yearofStudy):
-		newStudent= Student(id, firstname, lastname, contact, studentType, yearofStudy)
+	def addStudent(self, id, firstname, lastname, studentType, yearofStudy):
+		newStudent= Student(id, firstname, lastname, studentType, yearofStudy)
 		
 		db.session.add(newStudent)
 		db.session.commit()  # Commit to save the new student to the database
