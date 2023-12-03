@@ -4,9 +4,7 @@ from App.models import db
 from App.controllers import create_user, create_staff, create_student,create_review, get_latest_reviews, get_reviews_by_staff, get_staff, addVote
 from flask_login import login_required, current_user
 import randomname
-import nltk
-from nltk.corpus import names
-import random
+
 
 from App.models import Admin, Staff
 
@@ -22,22 +20,13 @@ def index_page():
     db.create_all()
 
     admin= create_user('bob', 'boblast' , 'bobpass')
-    staff = create_staff(admin, "Jerrelle", "Johnson", "2", "2", "jerrelle9@icloud.com", 4)
-
-    # nltk.download('names')
-
-    male_names = names.words('male.txt')
-    female_names = names.words('female.txt')
-
-    all_names = male_names + female_names
+    staff = create_staff(admin, "John", "Doe", "2", "2", "johndoe@icloud.com", 4)
     
-
-
     for student in range (2011, 2021): 
-        create_student(admin, student, random.choice(all_names), random.choice(all_names),"Full-Time", 2)
+        create_student(admin, student, randomname.get_name(), randomname.get_name(),"Full-Time", 2)
 
     for staff in range (2000, 2010):
-        create_staff(admin, random.choice(all_names), random.choice(all_names), "password2", str(staff), "staff@example.com", 5)
+        create_staff(admin, randomname.get_name(), randomname.get_name(), "password2", str(staff), "staff@example.com", 5)
         create_review(staff, staff + 11, random.choice([True, False]), "reviewing...") 
 
 
@@ -50,10 +39,7 @@ def index_page():
                     if get_staff(voter).ID != review.reviewerID: 
                         vote_type = random.choice(["upvote", "downvote"])  # Randomly select upvote/downvote
                         addVote(review.ID, get_staff(voter), vote_type)
-
                         
-
-    
     return render_template('welcome.html')
     
 

@@ -57,24 +57,24 @@ def logout_action():
     # return redirect(('/login'))
    
 
-@auth_views.route('/api/login', methods=['POST'])
-def user_login_api():
-	data = request.json
-	token = jwt_authenticate(data['ID'], data['password'])
-	if not token:
-		return jsonify(message='bad username or password given'), 401
-	return jsonify(access_token=token)
+# @auth_views.route('/api/login', methods=['POST'])
+# def user_login_api():
+# 	data = request.json
+# 	token = jwt_authenticate(data['ID'], data['password'])
+# 	if not token:
+# 		return jsonify(message='bad username or password given'), 401
+# 	return jsonify(access_token=token)
 
-@auth_views.route('/api/admin/login', methods=['POST'])
-def admin_login_api():
-  data = request.json
-  token = jwt_authenticate_admin(data['ID'], data['password'])
-  if not token:
-    return jsonify(message='bad username or password given'), 401
-  return jsonify(access_token=token)
+# @auth_views.route('/api/admin/login', methods=['POST'])
+# def admin_login_api():
+#   data = request.json
+#   token = jwt_authenticate_admin(data['ID'], data['password'])
+#   if not token:
+#     return jsonify(message='bad username or password given'), 401
+#   return jsonify(access_token=token)
 
 
-@auth_views.route('/api/identify', methods=['GET'])
-@jwt_required()
-def identify_user_action():
-    return jsonify({'message': f"firstname: {jwt_current_user.firstname}, lastname: {jwt_current_user.lastname}, id : {jwt_current_user.ID}"})
+# @auth_views.route('/api/identify', methods=['GET'])
+# @jwt_required()
+# def identify_user_action():
+#     return jsonify({'message': f"firstname: {jwt_current_user.firstname}, lastname: {jwt_current_user.lastname}, id : {jwt_current_user.ID}"})

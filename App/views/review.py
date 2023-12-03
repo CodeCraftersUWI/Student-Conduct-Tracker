@@ -73,24 +73,24 @@ def get_reviews_from_staff():
 #     if not review:
 #       return "Review not found", 404
       
-    if not jwt_current_user or not isinstance(jwt_current_user, Staff) or review.reviewerID != jwt_current_user.ID :
-      return "You are not authorized to edit this review", 401
+    # if not jwt_current_user or not isinstance(jwt_current_user, Staff) or review.reviewerID != jwt_current_user.ID :
+    #   return "You are not authorized to edit this review", 401
 
-    staff = get_staff(jwt_current_user.ID)
+    # staff = get_staff(jwt_current_user.ID)
 
-    data = request.json
+    # data = request.json
 
-    if not data['comment']:
-        return "Invalid request data", 400
+    # if not data['comment']:
+    #     return "Invalid request data", 400
     
-    if data['isPositive'] not in (True, False):
-        return jsonify({"message": f"invalid Positivity value  ({data['isPositive']}). Positive: true or false"}), 400
+    # if data['isPositive'] not in (True, False):
+    #     return jsonify({"message": f"invalid Positivity value  ({data['isPositive']}). Positive: true or false"}), 400
 
-    updated= edit_review(review, staff, data['isPositive'], data['comment'])
-    if updated: 
-      return jsonify(review.to_json(), 'Review Edited'), 200
-    else:
-      return "Error updating review", 400
+    # updated= edit_review(review, staff, data['isPositive'], data['comment'])
+    # if updated: 
+    #   return jsonify(review.to_json(), 'Review Edited'), 200
+    # else:
+    #   return "Error updating review", 400
 
 
 
@@ -102,13 +102,13 @@ def get_reviews_from_staff():
 #     if not review:
 #       return "Review not found", 404
 
-    if not jwt_current_user or not isinstance(jwt_current_user, Staff) or review.reviewerID != jwt_current_user.ID :
-      return "You are not authorized to delete this review", 401
+    # if not jwt_current_user or not isinstance(jwt_current_user, Staff) or review.reviewerID != jwt_current_user.ID :
+    #   return "You are not authorized to delete this review", 401
 
-    staff = get_staff(jwt_current_user.ID)
+    # staff = get_staff(jwt_current_user.ID)
    
-    if delete_review(review, staff):
-        return "Review deleted successfully", 200
-    else:
-        return "Issue deleting review", 400
+    # if delete_review(review, staff):
+    #     return "Review deleted successfully", 200
+    # else:
+    #     return "Issue deleting review", 400
 
