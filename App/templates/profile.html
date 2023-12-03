@@ -18,15 +18,15 @@
                     'Content-Type': 'application/json',
                 }
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                window.location.href = `/review_details/${reviewID}`;
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.href = `/review_details/${reviewID}`;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
         }
     </script>
 </head>
@@ -62,7 +62,6 @@
                 </div>
             </div>
         </div>
-       <div>
         <div class="staff-reviews">
             <main class="table">
                 <section class="table__body">
@@ -77,31 +76,30 @@
                         </thead>
                         <tbody>
                             {% for review in reviews %}
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <span style="cursor: pointer;" onclick="handleIdClick('{{ review.ID }}')">
+                            <tr>
+                                <td>
+                                    <p>
+                                        <span style="cursor: pointer;" onclick="handleIdClick('{{ review.ID }}')">
                                             {{review.ID}}
-                                            </span>
-                                        </p>
-                                    </td>
-                                    <td>{{ review.studentID }}</td>
-                                    <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
-                                    <td>
-                                        {% if review.isPositive %}
-                                            <p class="status delivered">Positive</p>
-                                        {% else %}
-                                            <p class="status cancelled">Negative</p>
-                                        {% endif %}
-                                    </td>
-                                </tr>
+                                        </span>
+                                    </p>
+                                </td>
+                                <td>{{ review.studentID }}</td>
+                                <td>{{ review.created.strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    {% if review.isPositive %}
+                                    <p class="status delivered">Positive</p>
+                                    {% else %}
+                                    <p class="status cancelled">Negative</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </section>
             </main>
         </div>
-       </div>
     </div>
 </body>
 
