@@ -9,6 +9,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='studentReviewsStyle.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script>
+        function handleIdClick(reviewID) {
+            fetch(`/review_details/${reviewID} `, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.href = `/review_details/${reviewID}`;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -58,6 +77,7 @@
                     <table>
                         <thead>
                             <tr>
+                                <th> Review ID <span class="icon-arrow"></span></th>
                                 <th> Type of Review <span class="icon-arrow"></span></th>
                                 <th> Created by<span class="icon-arrow"></span></th>
                                 <th> Created on <span class="icon-arrow"></span></th>
@@ -68,6 +88,7 @@
                         <tbody>
                             {% for review in reviews %}
                             <tr>
+                                <td style="cursor: pointer;" onclick="handleIdClick('{{ review.ID }}')">{{review.ID}}</td>
                                 <td>
                                     {% if review.isPositive %}
                                     <p class="status delivered">Positive</p>
